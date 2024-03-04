@@ -785,7 +785,15 @@ transform: rotate(-180deg);
 }
 
 .btn:hover {
-  background-color: #0056b3;
+  background-color: #7962ec;
+}
+.account {
+  text-align: right;
+  font-size: 14px;
+  margin-top: 5px;
+}
+.account a {
+  color: #6E57E0;
 }
 
 /* =================== blog ===================== */
