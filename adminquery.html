@@ -82,39 +82,14 @@
         </nav>
     </header>
 
-
         <!--==================== MAIN ====================-->
         <main class="main">
           <section class="section" id="services">
+             
+            <div class="admin-query__container container" >
+                    <table  id="admin-query">
 
-            <div class="admin-query__container container ">
-                <table>
-                    <tr>
-                        <th>Email</th>
-                        <th>Question</th>
-                        <th>Description</th>
-                    </tr>
-                    <tr>
-                        <td>Patrick</td>
-                        <td></td>
-                        <td>Row 1, Column 3</td>
-                    </tr>
-                    <tr>
-                        <td>Immaculee</td>
-                        <td>Row 2, Column 2</td>
-                        <td>Row 2, Column 3</td>
-                    </tr>
-                    <tr>
-                        <td>Josee</td>
-                        <td>Row 3, Column 2</td>
-                        <td>Row 3, Column 3</td>
-                    </tr>
-                    <tr>
-                        <td>Paccy</td>
-                        <td>Row 4, Column 2</td>
-                        <td>Row 4, Column 3</td>
-                    </tr>
-                </table>
+                    </table>
             </div>
         </section>
         </main>
@@ -160,6 +135,30 @@
             <p class="footer__copy">&#169; Martial. All right reserved</p>
          </div>
         </footer>       
-        <script src="js/script.js"></script>
+        <script>
+            const storedMessageData = localStorage.getItem('userMessage');
+    
+            if (storedMessageData) {
+                const userMessage = JSON.parse(storedMessageData);
+                displayUserMessage(userMessage);
+            }
+    
+            function displayUserMessage(userMessage) {
+                const adminQueryDiv = document.getElementById('admin-query');
+    
+                adminQueryDiv.innerHTML = `
+                         <tr>
+                            <th>Email</th>
+                            <th>Question</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>${userMessage.email}</td>
+                            <td>${userMessage.question}</td>
+                            <td>${userMessage.message}</td>
+                        </tr>
+                `;
+            }
+        </script>
     </body>
 </html>
