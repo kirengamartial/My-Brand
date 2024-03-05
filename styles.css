@@ -145,9 +145,20 @@ img {
   justify-content: space-between;
   align-items: center;
 }
-.menu {
-  visibility: hidden;
+.hamburger {
+  display: none;
+  cursor: pointer;
 }
+.bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background-color: white;  
+}
+
 
 .nav__logo,
 .nav__toggle {
@@ -983,13 +994,6 @@ th, td {
     margin-right: var(--mb-1);
   }
 
-    .nav__menu {
-      padding: 2rem .25rem 4rem;
-    }
-    .nav__list {
-      column-gap: 0;
-    }
-
   .home__content {
     grid-template-columns: .25fr 3fr;
   }
@@ -1175,14 +1179,35 @@ th, td {
   }
 }
 @media screen and (max-width: 544px) {
-  .nav__menu {
-    display: none; /* Hide the menu by default */
+   .nav__list {
+    position: fixed;
+    left: -100%;
+    top: 47px;
+    gap: 0;
+    display: flex;
+    background-color: #191627;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+   }
+   .nav__item {
+    margin: 16px 0;
+   }
+   .nav__list.active {
+    left: 0;
+   }
+  .hamburger {
+    display: block;
   }
-  
-  .menu {
-    display: block; /* Display the menu when the menu button is clicked */
-    visibility: visible;
-    width: 20px;
+  .hamburger.active  .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active  .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger.active  .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
   }
 }
 
