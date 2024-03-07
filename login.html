@@ -52,10 +52,8 @@
                             </a>
                         </li>
 
-                        <li class="nav__item">
-                            <a href="login.html" class="nav__link">
-                               Sign in 
-                            </a>
+                        <li class="nav__item nav__login">
+                            <a href="login.html" class="nav__link">Sign in</a>
                             
                         </li>
 
@@ -91,7 +89,7 @@
                 <span class="section__subtitle">Credentials</span>
 
                 <div class="login__container container ">
-                 <form action="#">
+                 <form id="login__form">
                     <div class="name">
                         <label for="user_name" class="label">username</label>
                         <div class="input-with-icon">
@@ -110,7 +108,7 @@
                     <div class="container">
                         <p class="account">Dont have an account?<a href="register.html"> Register</a></p>
                     </div>
-                    <input type="button" value="Login" class="btn">
+                    <input type="submit" value="Login" class="btn">
                  </form>
                 </div>
             </section>
@@ -158,6 +156,56 @@
             <p class="footer__copy">&#169; Martial. All right reserved</p>
          </div>
         </footer>       
-        <script src="js/script.js"></script>
+       
+        <script>
+            const hamburger = document.querySelector(".hamburger")
+            const navMenu = document.querySelector(".nav__list")
+            const Form = document.getElementById('login__form')
+            const loginDiv = document.querySelector('.nav__login')
+
+
+            hamburger.addEventListener("click", () => {
+             hamburger.classList.toggle("active")
+              navMenu.classList.toggle("active")
+             })
+             
+            Form.addEventListener('submit', (e) => {
+                e.preventDefault()
+
+                const username = document.getElementById('user_name').value
+                const password = document.getElementById('password').value
+
+                const user = {
+                    username: username,
+                    password: password
+                }
+                console.log(user)
+                localStorage.setItem('user', JSON.stringify(user))
+                displayUser(user);
+            })
+            const displayUser = (user) => {
+
+                if(!user) {
+                    loginDiv.innerHTML = `
+                    <a href="login.html" class="nav__link">
+                               Sign in 
+                     </a>
+                    `
+                }else {
+                loginDiv.innerHTML = `
+                <a href="login.html" class="nav__link">
+                 ${user.username}
+                </a>
+                `
+                }
+            }
+
+            const getData = localStorage.getItem('user')
+            if(getData) {
+                const userData = JSON.parse(getData)
+                displayUser(userData)
+            }
+            
+        </script>
     </body>
 </html>
