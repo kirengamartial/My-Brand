@@ -137,6 +137,14 @@
         </footer>       
         <script>
             const storedMessageData = localStorage.getItem('userMessage');
+            const hamburger = document.querySelector(".hamburger")
+            const navMenu = document.querySelector(".nav__list")
+
+
+            hamburger.addEventListener("click", () => {
+             hamburger.classList.toggle("active")
+             navMenu.classList.toggle("active")
+            })
     
             if (storedMessageData) {
                 const userMessage = JSON.parse(storedMessageData);
