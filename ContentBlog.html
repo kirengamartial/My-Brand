@@ -102,14 +102,15 @@
                             
                             At CodeCraft, we believe that coding is not merely a technical skill, but an art form. It's about more than just writing lines of code – it's about crafting solutions that are elegant, intuitive, and a pleasure to work with.</p>
                     </div>
+                    <div class="holderr"></div>
                  </div>
                  <div class="reviews">
                     <p>reviews</p>
                      <img src="/assets/img/Group 24.png" alt="">
-                     <form action="#">
+                     <form id="CommentForm">
                         <textarea name="comment" class="comment" id="comment" cols="30" rows="10"></textarea>
-                        <input type="button" class="button__comment" value="send">
-                     </form>
+                        <input type="submit" class="button__comment" value="send">
+                    </form>
                  </div>
                 </div>
             </section>
@@ -157,6 +158,43 @@
             <p class="footer__copy">&#169; Martial. All right reserved</p>
          </div>
         </footer>       
-        <script src="js/script.js"></script>
+        
+        <script>
+            const commentForm = document.getElementById('CommentForm');
+            const holderDiv = document.querySelector('.holderr');
+        
+            commentForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const comment = document.getElementById('comment').value;
+        
+                let existingComments = JSON.parse(localStorage.getItem('comments')) || [];
+        
+                existingComments.push(comment);
+        
+                localStorage.setItem('comments', JSON.stringify(existingComments));
+                console.log(existingComments)
+        
+                displayComments(existingComments);
+            });
+        
+            const displayComments = (comments) => {
+                holderDiv.innerHTML = '';
+        
+                comments.forEach((comment) => {
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('holder');
+                    commentElement.innerHTML = `<p>${comment}</p>`;
+                    holderDiv.appendChild(commentElement);
+                });
+            };
+        
+            const storedComments = JSON.parse(localStorage.getItem('comments'));
+        
+            if (storedComments) {
+                displayComments(storedComments);
+            }
+        </script>
+
+
     </body>
 </html>

@@ -820,6 +820,19 @@ transform: rotate(-180deg);
   font-size: 25px;
 
 }
+.holderr {
+  margin-top: 30px;
+}
+.holder {
+  border-radius: 5px; 
+  border: 1px solid #ccc; 
+  padding: 10px;  
+  background-color: #191627;  
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  
+}
+.holder {
+  margin-top: 10px;
+}
 .reviews {
   max-width: 200px;
 }
@@ -846,6 +859,7 @@ transform: rotate(-180deg);
 .comment {
   background-color: #211D35;
   border: none;
+  color: white;
   margin-bottom: 10px;
 }
 .comment::placeholder {
@@ -858,6 +872,7 @@ transform: rotate(-180deg);
   background-color: #6C55DB;
   color: white;
   font-weight: 500;
+  cursor: pointer;
   border-radius: 5px;
 }
 
