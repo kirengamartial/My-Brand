@@ -178,6 +178,15 @@
             <p class="footer__copy">&#169; Martial. All right reserved</p>
          </div>
         </footer>       
-        <script src="js/script.js"></script>
+       <script>
+          const hamburger = document.querySelector(".hamburger")
+            const navMenu = document.querySelector(".nav__list")
+
+
+            hamburger.addEventListener("click", () => {
+             hamburger.classList.toggle("active")
+             navMenu.classList.toggle("active")
+            })
+       </script>
     </body>
 </html>
