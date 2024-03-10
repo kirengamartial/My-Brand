@@ -52,22 +52,13 @@
                             </a>
                         </li>
 
-                        <li class="nav__item">
-                            <a href="login.html" class="nav__link">
-                               Sign in 
-                            </a>
+                        <li class="nav__item nav__login dropdown">
+                            <a href="login.html" class="nav__link">Sign in</a>
                             
                         </li>
 
-                        <li class="nav__item dropdown">
-                            <a href="#" class="nav__link">
-                                Admin <i class="fas fa-chevron-down"></i>
-                            </a>
-                            <ul class="dropdown-content">
-                                <li><a href="adminquery.html">Query</a></li>
-                                <li><a href="adminarticle.html">Article</a></li>
-                                <li><a href="register.html">Logout</a></li>
-                            </ul>
+                        <li class="nav__item dropdown admin">
+                           
                         </li>
 
                        
@@ -91,7 +82,7 @@
                 
 
                 <div class="login__container container ">
-                 <form action="#">
+                 <form id="form">
                     <div class="name">
                         <label for="user_name" class="label">username</label>
                         <div class="input-with-icon">
@@ -119,7 +110,7 @@
                     <div class="container">
                         <p class="account">Already have an account?<a href="login.html"> Sign in</a></p>
                     </div>
-                    <input type="button" value="Register" class="btn">
+                    <input type="submit" value="Register" class="btn">
                  </form>
                 </div>
             </section>
@@ -167,6 +158,40 @@
             <p class="footer__copy">&#169; Martial. All right reserved</p>
          </div>
         </footer>       
-        <script src="js/script.js"></script>
+        <script >
+             const Form = document.getElementById('form')
+             const Admin = document.querySelector('.admin')
+             const SignDiv = document.querySelector('.nav__login')
+             const hamburger = document.querySelector(".hamburger")
+             const navMenu = document.querySelector(".nav__list")
+
+
+            hamburger.addEventListener("click", () => {
+             hamburger.classList.toggle("active")
+             navMenu.classList.toggle("active")
+            })
+
+            Form.addEventListener('submit', (e) => {
+                e.preventDefault()
+                const inputUsername = document.getElementById('user_name').value
+                const inputUseremail = document.getElementById('user_email').value
+                const inupUserpassword = document.getElementById('password').value
+
+                const existingUser = JSON.parse(localStorage.getItem('user')) ||  []
+
+                const User = {
+                    username: inputUsername,
+                    useremail: inputUseremail,
+                    password: inupUserpassword,
+                    isAdmin: false
+                }
+                existingUser.push(User)
+                localStorage.setItem('user', JSON.stringify(existingUser))
+                const loginUser = existingUser.find(user => user.username === User.username && user.password === User.password)
+                localStorage.setItem('loginUser', JSON.stringify(loginUser))
+               window.location.href = "index.html"
+
+            })
+        </script>
     </body>
 </html>
