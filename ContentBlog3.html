@@ -165,31 +165,37 @@
                 e.preventDefault();
                 const comment = document.getElementById('comment').value;
         
-                let existingComments = JSON.parse(localStorage.getItem('comments')) || [];
                 let existingComments3 = JSON.parse(localStorage.getItem('comments3')) || []
+                const LoggedInUser = JSON.parse(localStorage.getItem('loginUser'))
 
-                existingComments.push(comment);
-                existingComments3.push(comment)
+                const comments = {
+                    username: LoggedInUser.username,
+                    comment: comment
+                }
+                
+            
+                if(LoggedInUser) {
+                existingComments3.push(comments)
+                alert('Comment Added')
+               }
         
-                localStorage.setItem('comments', JSON.stringify(existingComments));
+
                 localStorage.setItem('comments3', JSON.stringify(existingComments3))
         
                 displayComments(existingComments3);
             });
         
             const displayComments = (comments) => {
-                const LoggedInUser = JSON.parse(localStorage.getItem('loginUser'))
-                if(LoggedInUser.isAdmin) {
-                    holderDiv.innerHTML = '';
+
+                   holderDiv.innerHTML = '';
         
                    comments.forEach((comment) => {
                     holderDiv.innerHTML += `
                     <div class='holder'>
-                      <h5>Name: ${LoggedInUser.username}</h5> 
-                      <p>${comment}</p>    
+                      <h5>Name: ${comment.username}</h5> 
+                      <p>${comment.comment}</p>    
                     </div>`;
                    });
-                }
                
             };
         
