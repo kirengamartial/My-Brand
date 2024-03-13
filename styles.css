@@ -750,6 +750,13 @@ transform: rotate(-180deg);
 .input-with-icon {
   position: relative;
 }
+.confirm {
+  margin-top: 14px;
+}
+.error {
+  text-align: center;
+  color: rgb(189, 48, 48);
+}
 .input-with-icon .input {
   padding-left: 40px;
 }

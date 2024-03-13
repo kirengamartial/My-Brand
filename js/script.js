@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const Form = document.getElementById('login__form');
     const loginDiv = document.querySelector('.nav__login');
     const Admin = document.querySelector('.admin')
+    const Errors = document.querySelector(".error")
 
     hamburger.addEventListener("click", () => {
         hamburger.classList.toggle("active");
@@ -17,19 +18,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('password').value;
 
         const Users = JSON.parse(localStorage.getItem('user'));
-        // Users.forEach(User => {
-        //     if (User && User.username === username && User.password === password) {
-        //         displayUser(User);
-        //         console.log(User);
-        //     }
-        // });
+       
+        const loginUser =  Users.find(user => user.username === username && user.password === password)
 
-   const loginUser =  Users.find(user => user.username === username && user.password === password)
+        if(loginUser) {
 
-   localStorage.setItem('loginUser', JSON.stringify(loginUser))
-   displayUser()
-   window.location.href="index.html"
+        localStorage.setItem('loginUser', JSON.stringify(loginUser))
+        displayUser()
+        window.location.href="index.html"
+
+        } else {
+            Errors.innerHTML = `
+                <p>Invalid Credentials</p>
+                 `;
+
+
+                setTimeout(() => {
+                  Errors.innerHTML = '';
+                }, 3000);
+        }
+
+        
+
+        
     });
+
+// const user = JSON.parse(localStorage.getItem('loginUser'));
+// if(user.isLoggedIn) {
+//  window.location.href = "index.html" 
+// }
 
     const displayUser = () => {
         const currentUser = JSON.parse(localStorage.getItem('loginUser'));
@@ -66,11 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-//  document.getElementById('logout').addEventListener('click', (e) => {
-//     localStorage.removeItem('loginUser');
-//             window.location.href = "register.html"
-//             displayUser()
-//     });
 
     document.addEventListener('click', (e) => {
         
