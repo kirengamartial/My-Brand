@@ -200,27 +200,42 @@
                     isAdmin: false,
                     isLoggedIn: true
                 }
-                if(inupUserpassword === inputUserConfirmPassword) {
-                  
-                existingUser.push(User)
-                localStorage.setItem('user', JSON.stringify(existingUser))
-                const loginUser = existingUser.find(user => user.username === User.username && user.password === User.password)
-                localStorage.setItem('loginUser', JSON.stringify(loginUser))
-                window.location.href = "index.html"
-              
-               } else {
+                   
+               
+                if (inupUserpassword !== inputUserConfirmPassword) {
+                    Errors.innerHTML = `<p>Passwords do not match</p>`;
+                    setTimeout(() => {
+                        Errors.innerHTML = '';
+                    }, 3000);
+                    return; 
+                }
 
-                Errors.innerHTML = `
-                <p>Password does not match</p>
-                 `;
+                if (inupUserpassword.length < 6) {
+                     Errors.innerHTML = `<p>Password must be at least 6 characters long</p>`;
+                     setTimeout(() => {
+                         Errors.innerHTML = '';
+                     }, 3000);
+                     return; 
+                }
+
+                 
+                if (!/\d/.test(inupUserpassword)) {
+                    Errors.innerHTML = `<p>Password must contain numbers</p>`;
+                    setTimeout(() => {
+                        Errors.innerHTML = '';
+                    }, 3000);
+                    return;
+                }
 
 
-                setTimeout(() => {
-                  Errors.innerHTML = '';
-                }, 3000);
-
-               }                      
+                existingUser.push(User);
+                localStorage.setItem('user', JSON.stringify(existingUser));
+                const loginUser = existingUser.find(user => user.username === User.username && user.password === User.password);
+                localStorage.setItem('loginUser', JSON.stringify(loginUser));
+                window.location.href = "index.html";
             })
+
+
             const user = JSON.parse(localStorage.getItem('loginUser'));
               if(user.isLoggedIn) {
                window.location.href = "index.html" 
