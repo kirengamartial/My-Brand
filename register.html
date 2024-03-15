@@ -201,7 +201,15 @@
                     isLoggedIn: true
                 }
                    
-               
+                const userExists = existingUser.some(user => user.useremail === inputUseremail);
+                if (userExists) {
+               Errors.innerHTML = `<p>User with this email already exists</p>`;
+                   setTimeout(() => {
+                 Errors.innerHTML = '';
+                  }, 3000);
+                return;
+            }
+
                 if (inupUserpassword !== inputUserConfirmPassword) {
                     Errors.innerHTML = `<p>Passwords do not match</p>`;
                     setTimeout(() => {
