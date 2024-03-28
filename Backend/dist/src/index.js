@@ -242,7 +242,10 @@ app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { email, password } = req.body;
         const user = yield Users_1.default.findOne({ email });
-        if (user) {
+        if (!email || !password) {
+            res.status(400).json({ message: 'fill all the fields please' });
+        }
+        else if (user) {
             const auth = yield bcrypt_1.default.compare(password, user.password);
             if (auth) {
                 const token = cookieToken(user._id);
