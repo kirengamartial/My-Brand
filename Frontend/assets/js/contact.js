@@ -80,7 +80,7 @@ const updateUserUI = (user) => {
     }
     else {
         loginDiv.innerHTML = `
-            <a href="login.html" class="nav__link">
+            <a href="/logins" class="nav__link">
                 Sign in
             </a>
         `;
