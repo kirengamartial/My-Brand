@@ -93,9 +93,6 @@ const storedMessageData = localStorage.getItem('userMessage');
                 updateUserUI();
 
 
-                const user = JSON.parse(localStorage.getItem('loginUser'));
-                  if (!user || (!user.isLoggedIn || !user.isAdmin)) {
-                   window.location.href = "index.html";
-                   }
+               
      
      

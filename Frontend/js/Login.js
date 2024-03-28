@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     Form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        const username = document.getElementById('user_name').value;
+        const useremail = document.getElementById('user_email').value;
         const password = document.getElementById('password').value;
 
         const Users = JSON.parse(localStorage.getItem('user'));
        
-        const loginUser =  Users.find(user => user.username === username && user.password === password)
+        const loginUser =  Users.find(user => user.email === useremail && user.password === password)
 
         if(loginUser) {
 
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayUser = () => {
         const currentUser = JSON.parse(localStorage.getItem('loginUser'));
 
-        if (currentUser && currentUser.username) {
+        if (currentUser && currentUser.email) {
             if (currentUser.isAdmin === true) {
                 Admin.innerHTML = `
                     <a href="#" class="nav__link">
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             loginDiv.innerHTML = `
                 <a href="#" class="nav__link">
-                    ${currentUser.username}
+                    ${currentUser.email}
                 </a>
                 <ul class="dropdown-content">
                         <li ><a id="logout" href="#">Logout</a></li>

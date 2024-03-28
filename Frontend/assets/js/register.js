@@ -14,6 +14,7 @@ const SignDiv = document.querySelector('.nav__login');
 const hamburger = document.querySelector(".hamburger");
 const navMenu = document.querySelector(".nav__list");
 const ErrorsPassword = document.querySelector(".error_password");
+const confirmErrorsPassword = document.querySelector(".errorconfirm_password");
 const ErrorsUsername = document.querySelector(".error_username");
 const ErrorsEmail = document.querySelector(".error_email");
 if (hamburger && navMenu) {
@@ -39,37 +40,35 @@ if (Form) {
             ErrorsEmail.innerHTML = '';
         }
         try {
-            if (inupUserpassword === inputUserConfirmPassword) {
-                const res = yield fetch('http://localhost:3000/users', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        username: inputUsername,
-                        email: inputUseremail,
-                        password: inupUserpassword
-                    }),
-                    headers: { 'Content-type': 'application/json' }
-                });
-                const data = yield res.json();
-                console.log(data);
-                if (data.err) {
-                    if (data.err && ErrorsPassword) {
-                        ErrorsPassword.innerHTML = data.err.password;
-                    }
-                    if (data.err && ErrorsEmail) {
-                        ErrorsEmail.innerHTML = data.err.email;
-                    }
-                    if (data.err && ErrorsUsername) {
-                        ErrorsUsername.innerHTML = data.err.username;
-                    }
+            const res = yield fetch('http://localhost:3000/users', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: inputUsername,
+                    email: inputUseremail,
+                    password: inupUserpassword,
+                    confirmPassword: inputUserConfirmPassword
+                }),
+                headers: { 'Content-type': 'application/json' },
+                credentials: 'include'
+            });
+            const data = yield res.json();
+            console.log(data);
+            if (data.error) {
+                if (data.error && ErrorsPassword) {
+                    ErrorsPassword.innerHTML = data.error.password;
                 }
-                if (data.user) {
-                    location.assign('/');
+                if (data.error && confirmErrorsPassword) {
+                    confirmErrorsPassword.innerHTML = data.error.confirmPassword;
+                }
+                if (data.error && ErrorsEmail) {
+                    ErrorsEmail.innerHTML = data.error.email;
+                }
+                if (data.error && ErrorsUsername) {
+                    ErrorsUsername.innerHTML = data.error.username;
                 }
             }
-            else {
-                if (ErrorsPassword) {
-                    ErrorsPassword.innerHTML = 'password do not match';
-                }
+            if (data.user) {
+                location.assign('/');
             }
         }
         catch (error) {

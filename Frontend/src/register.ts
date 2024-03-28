@@ -4,6 +4,7 @@ const SignDiv: Element | null = document.querySelector('.nav__login');
 const hamburger: Element | null = document.querySelector(".hamburger");
 const navMenu: Element | null = document.querySelector(".nav__list");
 const ErrorsPassword: Element | null = document.querySelector(".error_password");
+const confirmErrorsPassword: Element | null = document.querySelector(".errorconfirm_password");
 const ErrorsUsername: Element | null = document.querySelector(".error_username");
 const ErrorsEmail: Element | null = document.querySelector(".error_email");
 
@@ -35,38 +36,40 @@ if (Form) {
         }
 
         try {
-            if(inupUserpassword === inputUserConfirmPassword) {
                 const res = await fetch('http://localhost:3000/users',{
                     method: 'POST',
                     body: JSON.stringify({ 
                         username: inputUsername,
                         email: inputUseremail,
-                        password: inupUserpassword
+                        password: inupUserpassword,
+                        confirmPassword: inputUserConfirmPassword 
+
                     }),
-                    headers: { 'Content-type': 'application/json'}
+                    headers: { 'Content-type': 'application/json'},
+                    credentials: 'include' 
                 })
                 const data = await res.json()
                 console.log(data)
-                if(data.err) {
-                    if(data.err && ErrorsPassword) {
-                        ErrorsPassword.innerHTML = data.err.password
+                if(data.error) {
+                    if(data.error && ErrorsPassword) {
+                        ErrorsPassword.innerHTML = data.error.password
                     }
-                    if(data.err && ErrorsEmail) {
-                        ErrorsEmail.innerHTML = data.err.email
+                    if(data.error && confirmErrorsPassword) {
+                        confirmErrorsPassword.innerHTML = data.error.confirmPassword
                     }
-                    if(data.err && ErrorsUsername) {
-                        ErrorsUsername.innerHTML = data.err.username
+                    if(data.error && ErrorsEmail) {
+                        ErrorsEmail.innerHTML = data.error.email
                     }
+                    if(data.error && ErrorsUsername) {
+                        ErrorsUsername.innerHTML = data.error.username
+                    }
+                   
                 }
                 if(data.user) {
                     location.assign('/');
                 }
                 
-            } else {
-                if(ErrorsPassword) {
-                    ErrorsPassword.innerHTML = 'password do not match'
-                }
-            }
+           
             
         } catch (error) {
             console.log(error)

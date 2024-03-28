@@ -10,18 +10,18 @@ document.addEventListener('DOMContentLoaded', () => {
             navMenu.classList.toggle("active");
         });
 
-        const updateUserUI = () => {
-            const currentUserStr = localStorage.getItem('loginUser');
-            if (currentUserStr) {
-                const currentUser = JSON.parse(currentUserStr);
-                if (currentUser && currentUser.username) {
-                    if (currentUser.isAdmin === true) {
+        const updateUserUI = (user: any) => {
+           
+            if (user) {
+
+                if (user && user.username) {
+                    if (user.isAdmin === true) {
                         Admin.innerHTML = `
                             <a href="#" class="nav__link">
                                 Admin <i class="fas fa-chevron-down"></i>
                             </a>
                             <ul class="dropdown-content">
-                                <li><a href="adminquery.html">Query</a></li>
+                                <li><a href="/query">Query</a></li>
                                 <li><a href="adminarticle.html">Article</a></li>
                             </ul>
                         `;
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     loginDiv.innerHTML = `
                         <a href="#" class="nav__link">
-                            ${currentUser.username}
+                            ${user.username}
                         </a>
                         <ul class="dropdown-content">
                             <li><a id="logout" href="#">Logout</a></li>
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                 } else {
                     loginDiv.innerHTML = `
-                        <a href="login.html" class="nav__link">
+                        <a href="/logins" class="nav__link">
                             Sign in
                         </a>
                     `;
@@ -47,15 +47,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        document.addEventListener('click', (e) => {
+        document.addEventListener('click', async (e) => {
             if (e.target instanceof HTMLElement && e.target.id === 'logout') {
                 e.preventDefault();
-                localStorage.removeItem('loginUser');
-                window.location.href = "register.html";
-                updateUserUI();
+                try {
+                    await fetch('/logout', {
+                        method: 'POST', 
+                        credentials: 'include' 
+                    });
+                    updateUserUI(null); 
+                    location.assign('/register')
+                } catch (error) {
+                    console.error('Error logging out:', error);
+                }
             }
         });
 
-        updateUserUI();
+        fetch('/api/user', { credentials: 'include' })
+        .then(response => response.json())
+        .then(user => updateUserUI(user))
+        .catch(error => console.error('Error fetching user data:', error));
     }
 });
