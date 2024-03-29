@@ -107,7 +107,7 @@ e.preventDefault();
 
 const updatedTitle = document.getElementById('editTitle').value;
 const updatedDesc = document.getElementById('editDesc').value;
-const updatedPhoto = document.getElementById('editPhoto').files[0];
+const updatedPhoto = document.getElementById('editPhoto').value;
 
 let articles = JSON.parse(localStorage.getItem('article'));
 
@@ -115,27 +115,13 @@ const index = articles.findIndex(article => article.id === parseInt(articleId));
 
 articles[index].title = updatedTitle;
 articles[index].description = updatedDesc;
+articles[index].photo = updatedPhoto;
 
-if (updatedPhoto) {
-
-const reader = new FileReader();
-reader.onload = function(event) {
-    const photoDataUrl = event.target.result;
-    articles[index].photo = photoDataUrl;
-
-    localStorage.setItem('article', JSON.stringify(articles));
+localStorage.setItem('article', JSON.stringify(articles));
 
     closeModal();
 
     displayArticle(articles);
-};
-reader.readAsDataURL(updatedPhoto);
-} else {
-localStorage.setItem('article', JSON.stringify(articles));
-
-closeModal();
-displayArticle(articles);
-}
 };
 
 window.closeModal = () => {
@@ -151,8 +137,5 @@ handleEditFormSubmit(e, articleId);
 const articles = JSON.parse(localStorage.getItem('article'));
 displayArticle(articles);
 
-const user = JSON.parse(localStorage.getItem('loginUser'));
-if (!user || (!user.isLoggedIn || !user.isAdmin)) {
-window.location.href = "index.html";
-}
+
 });

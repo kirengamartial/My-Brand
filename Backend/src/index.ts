@@ -11,6 +11,7 @@ import Joi from 'joi';
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 import bcrypt from 'bcrypt'
+import Blog from '../model/Blog'
 
 dotenv.config()
 
@@ -115,6 +116,18 @@ app.get('/query', checkAuth, (req: Request, res: Response) => {
 
 app.get('/logins', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../../../Frontend', 'login.html'));
+});
+
+app.get('/article',checkAuth, (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../../Frontend', 'adminarticle.html'));
+});
+
+app.get('/add_article',checkAuth, (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../../Frontend', 'adminaddarticle.html'));
+});
+
+app.get('/blogs/:id',checkAuth, (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../../Frontend', 'admineditarticle.html'));
 });
 
 
@@ -405,6 +418,82 @@ app.get('/contact/message', async(req, res) => {
       res.status(200).json(message)
   } catch (error) {
       res.status(400).json(error)
+  }
+});
+
+
+
+
+// blogs
+app.get('/blog', async(req: Request, res: Response) => {
+  try {
+    const blogs = await Blog.find()
+    res.status(200).json(blogs)
+  } catch (error) {
+    res.status(400).json({error})
+  }
+})
+
+app.get('/api/blog/:id', async(req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+    const blog = await Blog.findById(id)
+    res.status(200).json(blog)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+})
+
+app.post('/blog', async(req: Request, res: Response) => {
+  try {
+    const { photo, title, description} = req.body
+    const blog = await new Blog({ photo, title, description})
+    await blog.save()
+    res.status(200).json({message: 'created a blog successfully'})
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({error})
+  }
+
+
+})
+
+app.put('/blog/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const {photo, title, description } = req.body;
+
+    const blog = await Blog.findById(id);
+
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+
+    blog.photo = photo || blog.photo
+    blog.title = title || blog.title;
+    blog.description = description ?? blog.description;
+    
+    await blog.save();
+    res.status(200).json(blog)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
+
+app.delete('/blog/:id', async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const deletedBlog = await Blog.findByIdAndDelete(id);
+    if (!deletedBlog) {
+      res.status(404).json({ message: 'blog not found' });
+    } else {
+      res.status(204).send();
+    }
+   
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
   }
 });
 

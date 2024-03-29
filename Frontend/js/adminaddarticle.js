@@ -71,22 +71,16 @@ return i;
 Form.addEventListener('submit', (e) => {
 e.preventDefault();
 
-const inputPhoto = document.getElementById('photo').files[0];
+const inputPhoto = document.getElementById('photo').value;
 const inputTitle = document.getElementById('title').value;
 const inputDescription = document.getElementById('desc').value;
 
-if (!inputPhoto) {
-alert('Please select an image');
-return;
-}
 
-const reader = new FileReader();
-reader.onload = function(event) {
-const photoDataUrl = event.target.result;
+
 
 const articleStore = {
 id: generateId(),
-photo: photoDataUrl,
+photo: inputPhoto,
 title: inputTitle,
 description: inputDescription
 };
@@ -95,15 +89,10 @@ const articles = JSON.parse(localStorage.getItem('article')) || [];
 articles.push(articleStore);
 localStorage.setItem('article', JSON.stringify(articles));
 window.location.href = "adminarticle.html";
-};
 
-reader.readAsDataURL(inputPhoto);
+
 });
 
-const user = JSON.parse(localStorage.getItem('loginUser'));
-if (!user || (!user.isLoggedIn || !user.isAdmin)) {
-window.location.href = "index.html";
-}
-   
+
 
 });

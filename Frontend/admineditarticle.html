@@ -9,7 +9,7 @@
         
         
         <!--==================== CSS ====================-->
-        <link rel="stylesheet" href="assets/css/styles.css">
+        <link rel="stylesheet" href="/assets/css/styles.css">
 
         <title>Martial Portfolio</title>
     </head>
@@ -76,14 +76,15 @@
         <!--==================== MAIN ====================-->
         <main class="main">
           <section class="section" id="services">
-            <h2 class="section__title">Add  an Article</h2>
+            <h2 class="section__title">Edit  an Article</h2>
 
             <div class="Add-article__container container grid" >
-            <form id="form" class="form__content">
+            <form id="edit-form" class="form__content">
+                <input type="hidden" id="articleId">
                 <input class="add__admin" type="text" id="photo" name="photo" placeholder="photo url" >
                 <input class="add__admin" type="text" name="" id="title" placeholder="Title">
-                <textarea class="add__admin" name="desc" id="desc" cols="30" rows="10" placeholder="Description"></textarea>
-                <button type="submit" class="add__button">Add article</button>
+                <textarea class="add__admin" name="desc" id="description" cols="30" rows="10" placeholder="Description"></textarea>
+                <button type="submit" class="add__button">Edit article</button>
             </form>
 
             </div>
@@ -131,6 +132,6 @@
             <p class="footer__copy">&#169; Martial. All right reserved</p>
          </div>
         </footer>       
-        <script src="assets/js/adminaddarticle.js"></script>
+        <script src="/assets/js/admineditarticle.js"></script>
     </body>
 </html>

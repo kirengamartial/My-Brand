@@ -54,7 +54,7 @@ const updateUserUiInfo = (user: any) => {
                     </a>
                     <ul class="dropdown-content">
                         <li><a href="/query">Query</a></li>
-                        <li><a href="adminarticle.html">Article</a></li>
+                        <li><a href="/article">Article</a></li>
                     </ul>
                 `;
             }
