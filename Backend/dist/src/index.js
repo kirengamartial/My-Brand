@@ -25,6 +25,7 @@ const joi_1 = __importDefault(require("joi"));
 const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const Blog_1 = __importDefault(require("../model/Blog"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -113,6 +114,15 @@ app.get('/query', authMiddleware_1.checkAuth, (req, res) => {
 });
 app.get('/logins', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'login.html'));
+});
+app.get('/article', authMiddleware_1.checkAuth, (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'adminarticle.html'));
+});
+app.get('/add_article', authMiddleware_1.checkAuth, (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'adminaddarticle.html'));
+});
+app.get('/blogs/:id', authMiddleware_1.checkAuth, (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'admineditarticle.html'));
 });
 //users
 /**
@@ -386,6 +396,73 @@ app.get('/contact/message', (req, res) => __awaiter(void 0, void 0, void 0, func
     }
     catch (error) {
         res.status(400).json(error);
+    }
+}));
+// blogs
+app.get('/blog', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const blogs = yield Blog_1.default.find();
+        res.status(200).json(blogs);
+    }
+    catch (error) {
+        res.status(400).json({ error });
+    }
+}));
+app.get('/api/blog/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const blog = yield Blog_1.default.findById(id);
+        res.status(200).json(blog);
+    }
+    catch (error) {
+        res.status(400).json(error);
+    }
+}));
+app.post('/blog', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { photo, title, description } = req.body;
+        const blog = yield new Blog_1.default({ photo, title, description });
+        yield blog.save();
+        res.status(200).json({ message: 'created a blog successfully' });
+    }
+    catch (error) {
+        console.log(error);
+        res.status(400).json({ error });
+    }
+}));
+app.put('/blog/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const { photo, title, description } = req.body;
+        const blog = yield Blog_1.default.findById(id);
+        if (!blog) {
+            return res.status(404).json({ message: 'Blog not found' });
+        }
+        blog.photo = photo || blog.photo;
+        blog.title = title || blog.title;
+        blog.description = description !== null && description !== void 0 ? description : blog.description;
+        yield blog.save();
+        res.status(200).json(blog);
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+}));
+app.delete('/blog/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const deletedBlog = yield Blog_1.default.findByIdAndDelete(id);
+        if (!deletedBlog) {
+            res.status(404).json({ message: 'blog not found' });
+        }
+        else {
+            res.status(204).send();
+        }
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
     }
 }));
 exports.default = app;
