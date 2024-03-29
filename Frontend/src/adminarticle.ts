@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="article__img">
                     <img src="${article.photo}"  alt="">
                 </div>
-                <p>${article.description}</p>
+                <p>${article.title}</p>
                 <div>
                     <a href="/blogs/${article._id}" ">
                         <img class="article__icon" src="assets/img/Rectangle 57.png" alt="">
