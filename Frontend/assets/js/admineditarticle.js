@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const titleInput = document.getElementById('title');
     const descriptionInput = document.getElementById('description');
     const articleIdInput = document.getElementById('articleId');
+    const loginDiv = document.querySelector('.nav__login');
+    const Admin = document.querySelector('.admin');
     // Extract the id from the URL path
     const id = window.location.pathname.split('/').pop();
     // Fetch blog data by ID
@@ -42,4 +44,42 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .catch(error => console.error('Error updating blog:', error));
     });
+    const updateUserUI = (user) => {
+        if (user && user.username) {
+            if (user.isAdmin === true) {
+                Admin.innerHTML = `
+                    <a href="#" class="nav__link">
+                        Admin <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-content">
+                        <li><a href="/query">Query</a></li>
+                        <li><a href="/article">Article</a></li>
+                    </ul>
+                `;
+            }
+            else {
+                Admin.innerHTML = '';
+            }
+            loginDiv.innerHTML = `
+                <a href="#" class="nav__link">
+                    ${user.username}
+                </a>
+                <ul class="dropdown-content">
+                    <li ><a id="logout" href="#">Logout</a></li>
+                </ul>
+            `;
+        }
+        else {
+            loginDiv.innerHTML = `
+                <a href="/logins" class="nav__link">
+                    Sign in
+                </a>
+            `;
+            Admin.innerHTML = '';
+        }
+        fetch('/api/user', { credentials: 'include' })
+            .then(response => response.json())
+            .then(user => updateUserUI(user))
+            .catch(error => console.error('Error fetching user data:', error));
+    };
 });

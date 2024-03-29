@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         Admin <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="dropdown-content">
-                        <li><a href="adminquery.html">Query</a></li>
-                        <li><a href="adminarticle.html">Article</a></li>
+                        <li><a href="/query">Query</a></li>
+                        <li><a href="/article">Article</a></li>
                     </ul>
                 `;
             }
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {
             loginDiv.innerHTML = `
-                <a href="login.html" class="nav__link">
+                <a href="/logins" class="nav__link">
                     Sign in
                 </a>
             `;
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="article__img">
                     <img src="${article.photo}"  alt="">
                 </div>
-                <p>${article.description}</p>
+                <p>${article.title}</p>
                 <div>
                     <a href="/blogs/${article._id}" ">
                         <img class="article__icon" src="assets/img/Rectangle 57.png" alt="">
