@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             deleteButton.addEventListener('click', () => {
                 const articleId = deleteButton.getAttribute('data-article-id');
                 if (articleId) {
+                    
                     deleteArticle(articleId);
                 }
             });
