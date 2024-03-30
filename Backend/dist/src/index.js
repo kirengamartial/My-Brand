@@ -26,6 +26,7 @@ const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const Blog_1 = __importDefault(require("../model/Blog"));
+const Comment_1 = __importDefault(require("../model/Comment"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -123,6 +124,18 @@ app.get('/add_article', authMiddleware_1.checkAuth, (req, res) => {
 });
 app.get('/blogs/:id', authMiddleware_1.checkAuth, (req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'admineditarticle.html'));
+});
+app.get('/blogs', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'Blogs.html'));
+});
+app.get('/blogss/:id', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'ContentBlog1.html'));
+});
+app.get('/about', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'about.html'));
+});
+app.get('/portfolio', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'portfolio.html'));
 });
 //users
 /**
@@ -463,6 +476,28 @@ app.delete('/blog/:id', (req, res) => __awaiter(void 0, void 0, void 0, function
     catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error' });
+    }
+}));
+// comment 
+app.post('/comment', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { blog_id, name, comment } = req.body;
+        const comments = new Comment_1.default({ blog_id, name, comment });
+        yield comments.save();
+        res.status(200).json(comments);
+    }
+    catch (error) {
+        res.status(400).json(error);
+        console.log(error);
+    }
+}));
+app.get('/comment', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const comments = yield Comment_1.default.find();
+        res.status(200).json(comments);
+    }
+    catch (error) {
+        res.status(400).json(error);
     }
 }));
 exports.default = app;

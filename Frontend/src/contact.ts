@@ -52,7 +52,7 @@ try {
   
 });
 
-const updateUserUI = (user: any) => {
+const updateUserUII  = (user: any) => {
 
 
     if (user && user.username) {
@@ -101,7 +101,7 @@ document.addEventListener('click', async (e) => {
                 method: 'POST', 
                 credentials: 'include' 
             });
-            updateUserUI(null); 
+            updateUserUII (null); 
             location.assign('/register')
         } catch (error) {
             console.error('Error logging out:', error);
@@ -111,6 +111,6 @@ document.addEventListener('click', async (e) => {
 
 fetch('/api/user', { credentials: 'include' })
 .then(response => response.json())
-.then(user => updateUserUI(user))
+.then(user => updateUserUII (user))
 .catch(error => console.error('Error fetching user data:', error));
 

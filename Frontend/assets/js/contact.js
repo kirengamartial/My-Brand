@@ -49,7 +49,7 @@ form.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, functio
         console.log(error);
     }
 }));
-const updateUserUI = (user) => {
+const updateUserUII = (user) => {
     if (user && user.username) {
         if (user.isAdmin === true) {
             if (Adminy !== null) {
@@ -97,7 +97,7 @@ document.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, func
                 method: 'POST',
                 credentials: 'include'
             });
-            updateUserUI(null);
+            updateUserUII(null);
             location.assign('/register');
         }
         catch (error) {
@@ -107,5 +107,5 @@ document.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, func
 }));
 fetch('/api/user', { credentials: 'include' })
     .then(response => response.json())
-    .then(user => updateUserUI(user))
+    .then(user => updateUserUII(user))
     .catch(error => console.error('Error fetching user data:', error));

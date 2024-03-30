@@ -12,6 +12,7 @@ import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 import bcrypt from 'bcrypt'
 import Blog from '../model/Blog'
+import Comment from '../model/Comment'
 
 dotenv.config()
 
@@ -128,6 +129,23 @@ app.get('/add_article',checkAuth, (req: Request, res: Response) => {
 
 app.get('/blogs/:id',checkAuth, (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../../../Frontend', 'admineditarticle.html'));
+});
+
+
+app.get('/blogs', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../../Frontend', 'Blogs.html'));
+});
+
+app.get('/blogss/:id', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../../Frontend', 'ContentBlog1.html'));
+});
+
+app.get('/about', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../../Frontend', 'about.html'));
+});
+
+app.get('/portfolio', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../../Frontend', 'portfolio.html'));
 });
 
 
@@ -496,6 +514,29 @@ app.delete('/blog/:id', async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Server Error' });
   }
 });
+
+// comment 
+
+app.post('/comment', async(req:Request, res: Response) => {
+  try {
+    const {blog_id, name, comment } = req.body
+    const comments = new Comment({blog_id, name, comment})
+    await comments.save()
+    res.status(200).json(comments)
+  } catch (error) {
+    res.status(400).json(error)
+    console.log(error)
+  }
+})
+app.get('/comment', async(req:Request, res: Response) => {
+  try {
+    const comments = await Comment.find()
+    res.status(200).json(comments)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+ 
+})
 
 export default app
 
