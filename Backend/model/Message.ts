@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document} from 'mongoose'
-import { isEmail } from 'validator';
+// import { isEmail } from 'validator';
 
 export interface Message extends Document {
     name: string,
@@ -17,7 +17,7 @@ const messageSchema = new Schema({
         type: String,
         required: true, 
         lowercase: true,
-        validate: isEmail
+        // validate: isEmail
     },
     question: {
         type: String,

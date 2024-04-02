@@ -3,16 +3,17 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv'
 import path from "path";
 import cookieParser from 'cookie-parser'
-import {checkUser, checkAuth} from '../middleware/authMiddleware'
-import User from '../model/Users'
-import Message from '../model/Message'
+import {checkUser, checkAuth} from '../middleware/authMiddleware.js'
+import User from '../model/Users.js'
+import Message from '../model/Message.js'
 import jwt from 'jsonwebtoken'
 import Joi from 'joi';
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 import bcrypt from 'bcrypt'
-import Blog from '../model/Blog'
-import Comment from '../model/Comment'
+import Blog from '../model/Blog.js'
+import Comment from '../model/Comment.js'
+import { fileURLToPath } from 'url';
 
 dotenv.config()
 
@@ -89,65 +90,74 @@ app.use('/api-docs',
 )
 
 // Serve static files
-const staticPath = path.join(__dirname, '../../../Frontend/assets');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const staticPath = path.resolve(__dirname, '../../../Frontend/assets');
 app.use('/assets', express.static(staticPath));
 
 mongoose.connect(process.env.MONGODB_URL!)
-.then(res => console.log('connected successfully to the database'))
-.catch(error => console.log('Error connecting to database', error))
+    .then(res => console.log('connected successfully to the database'))
+    .catch(error => console.log('Error connecting to database', error));
+app.get('*', checkUser);
 
-
-
-app.get('*', checkUser)
-app.get('/', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'index.html'));
+app.get('/', (req, res) => {
+    const indexPath = path.resolve(__dirname, '../../../Frontend/index.html');
+    res.sendFile(indexPath);
 });
 
-app.get('/register', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'register.html'));
+app.get('/register', (req, res) => {
+    const registerPath = path.resolve(__dirname, '../../../Frontend/register.html');
+    res.sendFile(registerPath);
 });
 
-app.get('/contact', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'contact.html'));
+app.get('/contact', (req, res) => {
+    const contactPath = path.resolve(__dirname, '../../../Frontend/contact.html');
+    res.sendFile(contactPath);
 });
 
-app.get('/query', checkAuth, (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'adminquery.html'));
+app.get('/query', checkAuth, (req, res) => {
+    const adminQueryPath = path.resolve(__dirname, '../../../Frontend/adminquery.html');
+    res.sendFile(adminQueryPath);
 });
 
-app.get('/logins', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'login.html'));
+app.get('/logins', (req, res) => {
+    const loginPath = path.resolve(__dirname, '../../../Frontend/login.html');
+    res.sendFile(loginPath);
 });
 
-app.get('/article',checkAuth, (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'adminarticle.html'));
+app.get('/article', checkAuth, (req, res) => {
+    const adminArticlePath = path.resolve(__dirname, '../../../Frontend/adminarticle.html');
+    res.sendFile(adminArticlePath);
 });
 
-app.get('/add_article',checkAuth, (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'adminaddarticle.html'));
+app.get('/add_article', checkAuth, (req, res) => {
+    const adminAddArticlePath = path.resolve(__dirname, '../../../Frontend/adminaddarticle.html');
+    res.sendFile(adminAddArticlePath);
 });
 
-app.get('/blogs/:id',checkAuth, (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'admineditarticle.html'));
+app.get('/blogs/:id', checkAuth, (req, res) => {
+    const adminEditArticlePath = path.resolve(__dirname, '../../../Frontend/admineditarticle.html');
+    res.sendFile(adminEditArticlePath);
 });
 
-
-app.get('/blogs', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'Blogs.html'));
+app.get('/blogs', (req, res) => {
+    const blogsPath = path.resolve(__dirname, '../../../Frontend/Blogs.html');
+    res.sendFile(blogsPath);
 });
 
-app.get('/blogss/:id', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'ContentBlog1.html'));
+app.get('/blogss/:id', (req, res) => {
+    const contentBlogPath = path.resolve(__dirname, '../../../Frontend/ContentBlog1.html');
+    res.sendFile(contentBlogPath);
 });
 
-app.get('/about', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'about.html'));
+app.get('/about', (req, res) => {
+    const aboutPath = path.resolve(__dirname, '../../../Frontend/about.html');
+    res.sendFile(aboutPath);
 });
 
-app.get('/portfolio', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../../Frontend', 'portfolio.html'));
+app.get('/portfolio', (req, res) => {
+    const portfolioPath = path.resolve(__dirname, '../../../Frontend/portfolio.html');
+    res.sendFile(portfolioPath);
 });
-
 
 
 //users
@@ -430,7 +440,7 @@ app.post('/contact', validateUserMessage, async(req, res) => {
 *                   type: string
 *                   description: Error message.
 */
-app.get('/contact/message', async(req, res) => {
+app.get('/contact/message', async(req: Request, res: Response) => {
   try {
       const message = await Message.find()
       res.status(200).json(message)
@@ -467,7 +477,7 @@ app.post('/blog', async(req: Request, res: Response) => {
     const { photo, title, description} = req.body
     const blog = await new Blog({ photo, title, description})
     await blog.save()
-    res.status(200).json({message: 'created a blog successfully'})
+    res.status(200).json({message: 'created a blog successfully', id: blog._id})
   } catch (error) {
     console.log(error)
     res.status(400).json({error})
@@ -538,5 +548,6 @@ app.get('/comment', async(req:Request, res: Response) => {
  
 })
 
+// app.listen(3000, () => console.log('app is listening to port 3000'));
 export default app
 

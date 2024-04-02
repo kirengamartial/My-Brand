@@ -1,36 +1,23 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const mongoose_1 = __importDefault(require("mongoose"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const path_1 = __importDefault(require("path"));
-const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const authMiddleware_1 = require("../middleware/authMiddleware");
-const Users_1 = __importDefault(require("../model/Users"));
-const Message_1 = __importDefault(require("../model/Message"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const joi_1 = __importDefault(require("joi"));
-const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
-const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const Blog_1 = __importDefault(require("../model/Blog"));
-const Comment_1 = __importDefault(require("../model/Comment"));
-dotenv_1.default.config();
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
-app.use((0, cookie_parser_1.default)());
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from 'dotenv';
+import path from "path";
+import cookieParser from 'cookie-parser';
+import { checkUser, checkAuth } from '../middleware/authMiddleware.js';
+import User from '../model/Users.js';
+import Message from '../model/Message.js';
+import jwt from 'jsonwebtoken';
+import Joi from 'joi';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import bcrypt from 'bcrypt';
+import Blog from '../model/Blog.js';
+import Comment from '../model/Comment.js';
+import { fileURLToPath } from 'url';
+dotenv.config();
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
 const options = {
     definition: {
         openapi: "3.0.0",
@@ -92,50 +79,63 @@ const options = {
     },
     apis: ["./dist/src/*.js"]
 };
-const spacs = (0, swagger_jsdoc_1.default)(options);
-app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(spacs));
+const spacs = swaggerJSDoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(spacs));
 // Serve static files
-const staticPath = path_1.default.join(__dirname, '../../../Frontend/assets');
-app.use('/assets', express_1.default.static(staticPath));
-mongoose_1.default.connect(process.env.MONGODB_URL)
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const staticPath = path.resolve(__dirname, '../../../Frontend/assets');
+app.use('/assets', express.static(staticPath));
+mongoose.connect(process.env.MONGODB_URL)
     .then(res => console.log('connected successfully to the database'))
     .catch(error => console.log('Error connecting to database', error));
-app.get('*', authMiddleware_1.checkUser);
+app.get('*', checkUser);
 app.get('/', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'index.html'));
+    const indexPath = path.resolve(__dirname, '../../../Frontend/index.html');
+    res.sendFile(indexPath);
 });
 app.get('/register', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'register.html'));
+    const registerPath = path.resolve(__dirname, '../../../Frontend/register.html');
+    res.sendFile(registerPath);
 });
 app.get('/contact', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'contact.html'));
+    const contactPath = path.resolve(__dirname, '../../../Frontend/contact.html');
+    res.sendFile(contactPath);
 });
-app.get('/query', authMiddleware_1.checkAuth, (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'adminquery.html'));
+app.get('/query', checkAuth, (req, res) => {
+    const adminQueryPath = path.resolve(__dirname, '../../../Frontend/adminquery.html');
+    res.sendFile(adminQueryPath);
 });
 app.get('/logins', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'login.html'));
+    const loginPath = path.resolve(__dirname, '../../../Frontend/login.html');
+    res.sendFile(loginPath);
 });
-app.get('/article', authMiddleware_1.checkAuth, (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'adminarticle.html'));
+app.get('/article', checkAuth, (req, res) => {
+    const adminArticlePath = path.resolve(__dirname, '../../../Frontend/adminarticle.html');
+    res.sendFile(adminArticlePath);
 });
-app.get('/add_article', authMiddleware_1.checkAuth, (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'adminaddarticle.html'));
+app.get('/add_article', checkAuth, (req, res) => {
+    const adminAddArticlePath = path.resolve(__dirname, '../../../Frontend/adminaddarticle.html');
+    res.sendFile(adminAddArticlePath);
 });
-app.get('/blogs/:id', authMiddleware_1.checkAuth, (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'admineditarticle.html'));
+app.get('/blogs/:id', checkAuth, (req, res) => {
+    const adminEditArticlePath = path.resolve(__dirname, '../../../Frontend/admineditarticle.html');
+    res.sendFile(adminEditArticlePath);
 });
 app.get('/blogs', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'Blogs.html'));
+    const blogsPath = path.resolve(__dirname, '../../../Frontend/Blogs.html');
+    res.sendFile(blogsPath);
 });
 app.get('/blogss/:id', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'ContentBlog1.html'));
+    const contentBlogPath = path.resolve(__dirname, '../../../Frontend/ContentBlog1.html');
+    res.sendFile(contentBlogPath);
 });
 app.get('/about', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'about.html'));
+    const aboutPath = path.resolve(__dirname, '../../../Frontend/about.html');
+    res.sendFile(aboutPath);
 });
 app.get('/portfolio', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../../Frontend', 'portfolio.html'));
+    const portfolioPath = path.resolve(__dirname, '../../../Frontend/portfolio.html');
+    res.sendFile(portfolioPath);
 });
 //users
 /**
@@ -191,19 +191,19 @@ app.get('/portfolio', (req, res) => {
  *                   type: string
  *                   description: Error message.
  */
-const userSchema = joi_1.default.object({
-    username: joi_1.default.string().required().messages({
+const userSchema = Joi.object({
+    username: Joi.string().required().messages({
         'any.required': 'Username is required'
     }),
-    email: joi_1.default.string().email().required().messages({
+    email: Joi.string().email().required().messages({
         'string.email': 'Enter a valid email',
         'any.required': 'Email is required'
     }),
-    password: joi_1.default.string().min(6).required().messages({
+    password: Joi.string().min(6).required().messages({
         'string.min': 'Password must be at least 6 characters',
         'any.required': 'Password is required'
     }),
-    confirmPassword: joi_1.default.string().required().equal(joi_1.default.ref("password")).messages({
+    confirmPassword: Joi.string().required().equal(Joi.ref("password")).messages({
         'any.only': 'Confirm password must match the password',
         'any.required': 'Confirm password is required'
     })
@@ -228,15 +228,15 @@ const handleDuplicateEmailError = (error) => {
     return null;
 };
 const cookieToken = (id) => {
-    return jsonwebtoken_1.default.sign({ id }, process.env.JWT_SECRET, {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: 3 * 24 * 60 * 60
     });
 };
-app.post('/users', validateUserInput, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post('/users', validateUserInput, async (req, res) => {
     try {
         const { username, email, password } = req.body;
-        const user = new Users_1.default({ username, email, password });
-        yield user.save();
+        const user = new User({ username, email, password });
+        await user.save();
         const token = cookieToken(user._id);
         res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true, path: '/' });
         res.status(200).json({ user: user._id });
@@ -251,7 +251,7 @@ app.post('/users', validateUserInput, (req, res) => __awaiter(void 0, void 0, vo
         }
         res.status(400).json({ error: 'An error occurred while creating the user' });
     }
-}));
+});
 app.get('/api/user', (req, res) => {
     const user = res.locals.user;
     if (user) {
@@ -261,15 +261,15 @@ app.get('/api/user', (req, res) => {
         res.status(404).json({ error: 'User data not found' });
     }
 });
-app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = yield Users_1.default.findOne({ email });
+        const user = await User.findOne({ email });
         if (!email || !password) {
             res.status(400).json({ message: 'fill all the fields please' });
         }
         else if (user) {
-            const auth = yield bcrypt_1.default.compare(password, user.password);
+            const auth = await bcrypt.compare(password, user.password);
             if (auth) {
                 const token = cookieToken(user._id);
                 res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true });
@@ -286,24 +286,24 @@ app.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     catch (error) {
         console.log(error);
     }
-}));
+});
 app.post('/logout', (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
     res.status(200).json({ success: true });
 });
 // Message
-const messageSchema = joi_1.default.object({
-    name: joi_1.default.string().required().messages({
+const messageSchema = Joi.object({
+    name: Joi.string().required().messages({
         'any.required': 'Username is required'
     }),
-    email: joi_1.default.string().email().required().messages({
+    email: Joi.string().email().required().messages({
         'string.email': 'Enter a valid email',
         'any.required': 'Email is required'
     }),
-    question: joi_1.default.string().required().messages({
+    question: Joi.string().required().messages({
         'any.required': 'Username is required'
     }),
-    description: joi_1.default.string().required().messages({
+    description: Joi.string().required().messages({
         'any.required': 'Username is required'
     }),
 });
@@ -365,17 +365,17 @@ const validateUserMessage = (req, res, next) => {
  *                   type: string
  *                   description: Error message.
  */
-app.post('/contact', validateUserMessage, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post('/contact', validateUserMessage, async (req, res) => {
     try {
         const { name, email, question, description } = req.body;
-        const message = new Message_1.default({ name, email, question, description });
-        yield message.save();
+        const message = new Message({ name, email, question, description });
+        await message.save();
         res.status(200).json({ message: 'message sent successfully' });
     }
     catch (error) {
         res.status(400).json({ error: 'An error occurred while sending a message' });
     }
-}));
+});
 /**
 * @swagger
 * /contact/message:
@@ -402,70 +402,70 @@ app.post('/contact', validateUserMessage, (req, res) => __awaiter(void 0, void 0
 *                   type: string
 *                   description: Error message.
 */
-app.get('/contact/message', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/contact/message', async (req, res) => {
     try {
-        const message = yield Message_1.default.find();
+        const message = await Message.find();
         res.status(200).json(message);
     }
     catch (error) {
         res.status(400).json(error);
     }
-}));
+});
 // blogs
-app.get('/blog', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get('/blog', async (req, res) => {
     try {
-        const blogs = yield Blog_1.default.find();
+        const blogs = await Blog.find();
         res.status(200).json(blogs);
     }
     catch (error) {
         res.status(400).json({ error });
     }
-}));
-app.get('/api/blog/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.get('/api/blog/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const blog = yield Blog_1.default.findById(id);
+        const blog = await Blog.findById(id);
         res.status(200).json(blog);
     }
     catch (error) {
         res.status(400).json(error);
     }
-}));
-app.post('/blog', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.post('/blog', async (req, res) => {
     try {
         const { photo, title, description } = req.body;
-        const blog = yield new Blog_1.default({ photo, title, description });
-        yield blog.save();
-        res.status(200).json({ message: 'created a blog successfully' });
+        const blog = await new Blog({ photo, title, description });
+        await blog.save();
+        res.status(200).json({ message: 'created a blog successfully', id: blog._id });
     }
     catch (error) {
         console.log(error);
         res.status(400).json({ error });
     }
-}));
-app.put('/blog/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.put('/blog/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { photo, title, description } = req.body;
-        const blog = yield Blog_1.default.findById(id);
+        const blog = await Blog.findById(id);
         if (!blog) {
             return res.status(404).json({ message: 'Blog not found' });
         }
         blog.photo = photo || blog.photo;
         blog.title = title || blog.title;
-        blog.description = description !== null && description !== void 0 ? description : blog.description;
-        yield blog.save();
+        blog.description = description ?? blog.description;
+        await blog.save();
         res.status(200).json(blog);
     }
     catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server Error' });
     }
-}));
-app.delete('/blog/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.delete('/blog/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const deletedBlog = yield Blog_1.default.findByIdAndDelete(id);
+        const deletedBlog = await Blog.findByIdAndDelete(id);
         if (!deletedBlog) {
             res.status(404).json({ message: 'blog not found' });
         }
@@ -477,27 +477,29 @@ app.delete('/blog/:id', (req, res) => __awaiter(void 0, void 0, void 0, function
         console.error(error);
         res.status(500).json({ message: 'Server Error' });
     }
-}));
+});
 // comment 
-app.post('/comment', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post('/comment', async (req, res) => {
     try {
         const { blog_id, name, comment } = req.body;
-        const comments = new Comment_1.default({ blog_id, name, comment });
-        yield comments.save();
+        const comments = new Comment({ blog_id, name, comment });
+        await comments.save();
         res.status(200).json(comments);
     }
     catch (error) {
         res.status(400).json(error);
         console.log(error);
     }
-}));
-app.get('/comment', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.get('/comment', async (req, res) => {
     try {
-        const comments = yield Comment_1.default.find();
+        const comments = await Comment.find();
         res.status(200).json(comments);
     }
     catch (error) {
         res.status(400).json(error);
     }
-}));
-exports.default = app;
+});
+// app.listen(3000, () => console.log('app is listening to port 3000'));
+export default app;
+//# sourceMappingURL=index.js.map

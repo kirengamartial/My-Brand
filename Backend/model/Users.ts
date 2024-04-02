@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document} from 'mongoose'
-import { isEmail } from 'validator';
+// import { isEmail } from 'validator';
 import bcrypt from 'bcrypt'
 
 export interface User extends Document {
@@ -19,7 +19,7 @@ const userSchema = new Schema({
         required: [true, 'Email is required'],
         unique: true,
         lowercase: true,
-        validate: [isEmail, 'enter a valid email']
+        // validate: [isEmail, 'enter a valid email']
     }, 
     password: {
         type: String,

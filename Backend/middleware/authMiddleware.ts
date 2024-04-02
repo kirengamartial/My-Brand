@@ -1,5 +1,5 @@
-import express, { Request, Response, NextFunction} from 'express'
-import User from '../model/Users'
+import { Request, Response, NextFunction} from 'express'
+import User from '../model/Users.js'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 dotenv.config()
