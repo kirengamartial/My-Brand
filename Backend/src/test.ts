@@ -11,6 +11,10 @@ before(function(done) {
     setTimeout(done, 1000);
 });
 
+after(function() {
+    process.exit();
+});
+
 describe('Contact Message API', () => {
     it('should return an array of messages', function(done) {
         this.timeout(15000);
