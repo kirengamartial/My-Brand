@@ -22,6 +22,57 @@ describe('Contact Message API', () => {
         });
     });
 });
+describe('Login API', () => {
+    // Test logging in with valid credentials
+    it('should login with valid credentials', function (done) {
+        const credentials = {
+            email: 'kirenga@gmail.com',
+            password: 'kirenga'
+        };
+        request(app)
+            .post('/login')
+            .send(credentials)
+            .expect(200)
+            .end((err, res) => {
+            if (err)
+                return done(err);
+            console.log(res.body.user.isAdmin);
+            expect(res.body).to.have.property('token');
+            done();
+        });
+    });
+    // Test logging in with invalid credentials
+    it('should not login with invalid credentials', function (done) {
+        const invalidCredentials = {
+            email: 'invalidemail@gmail.com',
+            password: 'invalidpassword'
+        };
+        request(app)
+            .post('/login')
+            .send(invalidCredentials)
+            .expect(400)
+            .end((err, res) => {
+            if (err)
+                return done(err);
+            expect(res.body).to.have.property('message', 'email is incorrect');
+            done();
+        });
+    });
+    // Test logging in with missing fields
+    it('should not login with missing fields', function (done) {
+        const missingFields = {};
+        request(app)
+            .post('/login')
+            .send(missingFields)
+            .expect(400)
+            .end((err, res) => {
+            if (err)
+                return done(err);
+            expect(res.body).to.have.property('message', 'fill all the fields please');
+            done();
+        });
+    });
+});
 describe('Blog API', () => {
     let createdBlogId;
     it('should create a new blog', function (done) {

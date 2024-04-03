@@ -293,6 +293,49 @@ app.get('/api/user', (req: Request, res: Response) => {
   }
 });
 
+
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Login user
+ *     description: Authenticate user credentials and generate JWT token.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: User's email address.
+ *               password:
+ *                 type: string
+ *                 description: User's password.
+ *     responses:
+ *       '200':
+ *         description: Successfully authenticated.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   type: string
+ *                   description: User ID.
+ *       '400':
+ *         description: Bad request. Either email or password is incorrect or missing.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message.
+ */
+
 app.post('/login',async(req: Request, res: Response) =>{
   try {
     const {email, password} = req.body
@@ -305,7 +348,7 @@ app.post('/login',async(req: Request, res: Response) =>{
       if(auth) {
          const token = cookieToken(user._id)
          res.cookie('jwt', token, {maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true})
-         res.status(200).json({user: user._id})
+         res.status(200).json({token: token, user: user})
       }else { 
         res.status(400).json({message: 'password is incorrect'})
       }
@@ -319,6 +362,26 @@ app.post('/login',async(req: Request, res: Response) =>{
   }
  
 })
+
+
+/**
+ * @swagger
+ * /logout:
+ *   post:
+ *     summary: Logout user
+ *     description: Clear JWT cookie to log out the user.
+ *     responses:
+ *       '200':
+ *         description: Successfully logged out.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   description: Indicates whether the logout was successful.
+ */
 
 app.post('/logout', (req: Request, res: Response) => {
   res.cookie('jwt', '', { maxAge: 1})
@@ -453,6 +516,67 @@ app.get('/contact/message', async(req: Request, res: Response) => {
 
 
 // blogs
+
+
+/**
+ * @swagger
+ * /blog:
+ *   get:
+ *     summary: Retrieve all blogs
+ *     description: Retrieve all blogs from the database.
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       '200':
+ *         description: A list of blogs retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Blog'
+ *       '400':
+ *         description: Bad request. Error occurred while retrieving blogs.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Error message.
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Blog:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: Unique identifier for the blog.
+ *         title:
+ *           type: string
+ *           description: Title of the blog.
+ *         description:
+ *           type: string
+ *           description: Description or content of the blog.
+ *         photo:
+ *           type: string
+ *           description: URL of the blog photo.
+ *       required:
+ *         - title
+ *         - description
+ *         - photo
+ *     cookieAuth:
+ *       type: apiKey
+ *       in: cookie
+ *       name: jwt
+ *       description: JWT token to authenticate the user.
+ */
+
 app.get('/blog', async(req: Request, res: Response) => {
   try {
     const blogs = await Blog.find()
@@ -461,6 +585,70 @@ app.get('/blog', async(req: Request, res: Response) => {
     res.status(400).json({error})
   }
 })
+
+
+
+/**
+ * @swagger
+ * /api/blog/{id}:
+ *   get:
+ *     summary: Retrieve a blog by ID
+ *     description: Retrieve a single blog entry from the database by its ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the blog to retrieve.
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       '200':
+ *         description: Blog retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Blog'
+ *       '400':
+ *         description: Bad request. Error occurred while retrieving the blog.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Error message.
+ *
+ *     components:
+ *       schemas:
+ *         Blog:
+ *           type: object
+ *           properties:
+ *             _id:
+ *               type: string
+ *               description: Unique identifier for the blog.
+ *             title:
+ *               type: string
+ *               description: Title of the blog.
+ *             description:
+ *               type: string
+ *               description: Description or content of the blog.
+ *             photo:
+ *               type: string
+ *               description: URL of the blog photo.
+ *           required:
+ *             - title
+ *             - description
+ *             - photo
+ *       cookieAuth:
+ *         type: apiKey
+ *         in: cookie
+ *         name: jwt
+ *         description: JWT token to authenticate the user.
+ */
+
 
 app.get('/api/blog/:id', async(req: Request, res: Response) => {
   try {
@@ -471,6 +659,68 @@ app.get('/api/blog/:id', async(req: Request, res: Response) => {
     res.status(400).json(error)
   }
 })
+
+
+/**
+ * @swagger
+ * /blog:
+ *   post:
+ *     summary: Create a new blog
+ *     description: Create a new blog entry with provided information.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               photo:
+ *                 type: string
+ *                 description: URL of the blog photo.
+ *               title:
+ *                 type: string
+ *                 description: Title of the blog.
+ *               description:
+ *                 type: string
+ *                 description: Description or content of the blog.
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       '200':
+ *         description: Blog created successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Success message.
+ *                 id:
+ *                   type: string
+ *                   description: ID of the created blog.
+ *       '400':
+ *         description: Bad request. Error occurred while creating the blog.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   description: Error message.
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     cookieAuth:
+ *       type: apiKey
+ *       in: cookie
+ *       name: jwt
+ *       description: JWT token to authenticate the user.
+ */
 
 app.post('/blog', async(req: Request, res: Response) => {
   try {
@@ -485,6 +735,94 @@ app.post('/blog', async(req: Request, res: Response) => {
 
 
 })
+
+
+/**
+ * @swagger
+ * /blog/{id}:
+ *   put:
+ *     summary: Update a blog by ID
+ *     description: Update an existing blog entry in the database by its ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the blog to update.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               photo:
+ *                 type: string
+ *                 description: Updated URL of the blog photo.
+ *               title:
+ *                 type: string
+ *                 description: Updated title of the blog.
+ *               description:
+ *                 type: string
+ *                 description: Updated description or content of the blog.
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       '200':
+ *         description: Blog updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Blog'
+ *       '404':
+ *         description: Blog not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating blog not found.
+ *       '500':
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating server error.
+ *
+ *     components:
+ *       schemas:
+ *         Blog:
+ *           type: object
+ *           properties:
+ *             _id:
+ *               type: string
+ *               description: Unique identifier for the blog.
+ *             title:
+ *               type: string
+ *               description: Title of the blog.
+ *             description:
+ *               type: string
+ *               description: Description or content of the blog.
+ *             photo:
+ *               type: string
+ *               description: URL of the blog photo.
+ *           required:
+ *             - title
+ *             - description
+ *             - photo
+ *       cookieAuth:
+ *         type: apiKey
+ *         in: cookie
+ *         name: jwt
+ *         description: JWT token to authenticate the user.
+ */
 
 app.put('/blog/:id', async (req: Request, res: Response) => {
   try {
@@ -509,6 +847,56 @@ app.put('/blog/:id', async (req: Request, res: Response) => {
   }
 });
 
+
+/**
+ * @swagger
+ * /blog/{id}:
+ *   delete:
+ *     summary: Delete a blog by ID
+ *     description: Delete an existing blog entry from the database by its ID.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the blog to delete.
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       '204':
+ *         description: Blog deleted successfully.
+ *       '404':
+ *         description: Blog not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating blog not found.
+ *       '500':
+ *         description: Internal server error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating server error.
+ *
+ *     components:
+ *       securitySchemes:
+ *         cookieAuth:
+ *           type: apiKey
+ *           in: cookie
+ *           name: jwt
+ *           description: JWT token to authenticate the user.
+ */
+
+
 app.delete('/blog/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -527,6 +915,60 @@ app.delete('/blog/:id', async (req: Request, res: Response) => {
 
 // comment 
 
+/**
+ * @swagger
+ * /comment:
+ *   post:
+ *     summary: Create a new comment on a blog post
+ *     description: Adds a new comment to a specific blog post.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               blog_id:
+ *                 type: string
+ *                 description: The ID of the blog post to comment on.
+ *               name:
+ *                 type: string
+ *                 description: The name of the commenter.
+ *               comment:
+ *                 type: string
+ *                 description: The comment content.
+ *     responses:
+ *       '200':
+ *         description: Successfully created a new comment.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   description: The ID of the newly created comment.
+ *                 blog_id:
+ *                   type: string
+ *                   description: The ID of the blog post the comment belongs to.
+ *                 name:
+ *                   type: string
+ *                   description: The name of the commenter.
+ *                 comment:
+ *                   type: string
+ *                   description: The content of the comment.
+ *       '400':
+ *         description: Bad request. Could not create the comment.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message describing the reason for failure.
+ */
+
 app.post('/comment', async(req:Request, res: Response) => {
   try {
     const {blog_id, name, comment } = req.body
@@ -538,6 +980,48 @@ app.post('/comment', async(req:Request, res: Response) => {
     console.log(error)
   }
 })
+
+
+/**
+ * @swagger
+ * /comment:
+ *   get:
+ *     summary: Get all comments
+ *     description: Retrieves all comments for blog posts.
+ *     responses:
+ *       '200':
+ *         description: Successfully retrieved all comments.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                     description: The ID of the comment.
+ *                   blog_id:
+ *                     type: string
+ *                     description: The ID of the blog post the comment belongs to.
+ *                   name:
+ *                     type: string
+ *                     description: The name of the commenter.
+ *                   comment:
+ *                     type: string
+ *                     description: The content of the comment.
+ *       '400':
+ *         description: Bad request. Could not retrieve comments.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message describing the reason for failure.
+ */
+
 app.get('/comment', async(req:Request, res: Response) => {
   try {
     const comments = await Comment.find()

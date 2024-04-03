@@ -5,7 +5,7 @@ dotenv.config();
 export const checkAuth = (req, res, next) => {
     const token = req.cookies.jwt;
     if (!token) {
-        return res.status(401).redirect('/');
+        return res.status(401).json('no token found');
     }
     jwt.verify(token, process.env.JWT_SECRET, async (err, decodedInfo) => {
         if (err) {
@@ -15,7 +15,7 @@ export const checkAuth = (req, res, next) => {
         try {
             const user = await User.findById(decodedInfo.id);
             if (!user || !user.isAdmin) {
-                return res.redirect("back");
+                return res.status(401).json('login as an admin to access this route');
             }
             next();
         }
