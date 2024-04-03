@@ -27,7 +27,6 @@ describe('Contact Message API', () => {
 });
 
 describe('Login API', () => {
-    // Test logging in with valid credentials
     it('should login with valid credentials', function(done) {
         const credentials = {
             email: 'kirenga@gmail.com',
