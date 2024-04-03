@@ -11,3 +11,8 @@ jobs:
     steps:
       - checkout
       - run: node --version
+          name: Install dependencies
+          command: cd Backend && npm install
+      - run: 
+          name: Run Tests
+          command: cd Backend && npm run test    
