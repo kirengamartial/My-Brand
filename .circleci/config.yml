@@ -10,9 +10,9 @@ jobs:
       - image: cimg/node:21.7.1
     steps:
       - checkout
-      - run: node --version
+      - run:
           name: Install dependencies
           command: cd Backend && npm install
-      - run: 
+      - run:
           name: Run Tests
-          command: cd Backend && npm run test    
+          command: cd Backend && npm run test
