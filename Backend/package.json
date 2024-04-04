@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node dist/src/server.js",
-    "test:coverage": "nyc mocha --timeout 10000 dist/src/test.js",
+    "test:coverage": "nyc --reporter=text npm run test",
     "test": "mocha --timeout 10000 dist/src/test.js",
     "build-ts": "tsc",
     "build": "npm install && npm run build-ts"

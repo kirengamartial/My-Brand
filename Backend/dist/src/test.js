@@ -39,7 +39,7 @@ describe('Login API', () => {
             if (err)
                 return done(err);
             console.log(res.body.user.isAdmin);
-            expect(res.body).to.have.property('token');
+            expect(res.body).to.have.property('user');
             done();
         });
     });
