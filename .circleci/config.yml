@@ -40,3 +40,4 @@ jobs:
           name: Deploy to Render
           command: |
             renderctl --file ../Backend/render.yaml --api-key rnd_kO4hNk04ZZOJ8dDCewMnfUgv5JAL up --force
+            renderctl deployments
