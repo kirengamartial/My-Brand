@@ -30,6 +30,7 @@ jobs:
       - run:
           name: Install Render CLI
           command: |
+            sudo rm /usr/local/bin/renderctl
             curl -O https://render.com/download/linux/renderctl
             chmod +x renderctl
             sudo mv renderctl /usr/local/bin
