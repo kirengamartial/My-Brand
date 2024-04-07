@@ -5,9 +5,6 @@ workflows:
   build-deploy:
     jobs:
       - test
-      - deploy:
-          requires:
-            - test
 
 jobs:
   test:
@@ -21,25 +18,3 @@ jobs:
       - run:
           name: Run Tests
           command: cd Backend && npm run test
-
-  deploy:
-    docker:
-      - image: cimg/node:21.7.1
-    steps:
-      - checkout
-      - run:
-          name: Install Render CLI
-          command: |
-            curl -O https://render.com/download/windows/renderctl.exe || { echo "Failed to download renderctl"; exit 1; }
-            sudo mv renderctl.exe /usr/local/bin/renderctl || { echo "Failed to move renderctl to /usr/local/bin"; exit 1; }
-      - run:
-          name: Verify Render CLI Installation
-          command: renderctl version
-      - run:
-          name: Set Execute Permission
-          command: sudo chmod +x /usr/local/bin/renderctl || { echo "Failed to set execute permission for renderctl"; exit 1; }
-      - run:
-          name: Deploy to Render
-          command: |
-            renderctl --file ../Backend/render.yaml --api-key rnd_kO4hNk04ZZOJ8dDCewMnfUgv5JAL up --force
-            renderctl deployments
