@@ -30,10 +30,8 @@ jobs:
       - run:
           name: Install Render CLI
           command: |
-            sudo rm /usr/local/bin/renderctl
-            curl -O https://render.com/download/linux/renderctl
-            chmod +x renderctl
-            sudo mv renderctl /usr/local/bin
+            curl -O https://render.com/download/windows/renderctl.exe || { echo "Failed to download renderctl"; exit 1; }
+            move renderctl.exe C:\Windows\System32 || { echo "Failed to move renderctl to System32"; exit 1; }
       - run:
           name: Verify Render CLI Installation
           command: renderctl version
