@@ -34,6 +34,9 @@ jobs:
             chmod +x renderctl
             sudo mv renderctl /usr/local/bin
       - run:
+          name: Verify Render CLI Installation
+          command: renderctl version
+      - run:
           name: Deploy to Render
           command: |
             renderctl --file ../Backend/render.yaml --api-key rnd_kO4hNk04ZZOJ8dDCewMnfUgv5JAL up --force
