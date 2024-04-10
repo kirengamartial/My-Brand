@@ -9,11 +9,11 @@ jobs:
           name: Install dependencies
           command: cd Backend && npm install
       - run:
-          name: Build
-          command: cd Backend && npm run build
-      - run:
           name: testing
           command: cd Backend && npm run test
+      - run:
+          name: Build
+          command: cd Backend && npm run build
 
   deploy:
     docker:
