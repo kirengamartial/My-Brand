@@ -32,7 +32,7 @@ jobs:
       - run:
           name: Deploy to Render
           command: |
-            curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${RENDER_API_KEY}" -d '{"branch":"main"}' https://api.render.com/deploy/srv-cob79ln79t8c73bpbl7g?key=${RENDER_DEPLOY_HOOK}
+            curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer ${RENDER_API_KEY}" -d '{"branch":"main"}' https://api.render.com/deploy/srv-cob7vnv79t8c73bpmg7g?key=${RENDER_DEPLOY_HOOK}
 
 workflows:
   version: 2
