@@ -12,16 +12,36 @@ after(function () {
     process.exit();
 });
 describe('Contact Message API', () => {
-    it('should return an array of messages', function (done) {
-        this.timeout(15000);
-        request(app)
-            .get('/contact/message')
-            .expect(200)
-            .end((err, res) => {
-            if (err)
-                return done(err);
-            expect(res.body).to.be.an('array');
-            done();
+    describe('handle 200 status code for messages', () => {
+        it('Create a new contact message', function (done) {
+            const contactMessage = {
+                name: "martial",
+                email: "marc@gmail.com",
+                question: "what is an ecommerce",
+                description: "build an ecommerce please"
+            };
+            request(app)
+                .post('/contact')
+                .send(contactMessage)
+                .expect(200)
+                .end((err, res) => {
+                if (err)
+                    return done(err);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+        });
+        it('should return an array of messages', function (done) {
+            this.timeout(15000);
+            request(app)
+                .get('/contact/message')
+                .expect(200)
+                .end((err, res) => {
+                if (err)
+                    return done(err);
+                expect(res.body).to.be.an('array');
+                done();
+            });
         });
     });
 });

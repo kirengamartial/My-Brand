@@ -1,20 +1,41 @@
 version: 2.1
-
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - test
-
 jobs:
-  test:
+  build:
     docker:
-      - image: cimg/node:21.7.1
+      - image: circleci/node:14
+    working_directory: ./Backend
     steps:
       - checkout
       - run:
           name: Install dependencies
-          command: cd Backend && npm install
+          command: npm install
       - run:
-          name: Run Tests
-          command: cd Backend && npm run test
+          name: Build
+          command: npm run build
+      - run:
+          name: testing
+          command: npm run test
+
+  deploy:
+    docker:
+      - image: circleci/node:14
+    working_directory: ./Backend
+    steps:
+      - checkout
+      - run:
+          name: Deploy to Render
+          command: |
+            curl -X POST -H "Content-Type: application/json" -d '{"branch":"main"}' -u "kirengamartial@gmail.com:$julienn1w" https://api.render.com/v1/deploys
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - main

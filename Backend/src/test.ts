@@ -2,6 +2,7 @@ import { describe, it, before } from 'mocha';
 import app from './index.js';
 import request from 'supertest';
 import { expect } from 'chai';
+import sinon from 'sinon'
 
 
 before(function(done) {
@@ -16,19 +17,41 @@ after(function() {
 });
 
 describe('Contact Message API', () => {
-    it('should return an array of messages', function(done) {
-        this.timeout(15000);
-        request(app)
-            .get('/contact/message')
+    describe('handle 200 status code for messages',() => {
+        it('Create a new contact message', function(done) {
+            const contactMessage =  {
+               name: "martial",
+               email: "marc@gmail.com",
+               question: "what is an ecommerce",
+               description: "build an ecommerce please"
+            }
+            request(app)
+            .post('/contact')
+            .send(contactMessage)
             .expect(200)
             .end((err, res) => {
-                if (err)
-                    return done(err);
-                expect(res.body).to.be.an('array');
-                done();
-            });
-    });
+                if(err) return done(err)
+                expect(res.body).to.be.an('object')    
+                done()
+            })
+    
+        })
+
+        it('should return an array of messages', function(done) {
+            this.timeout(15000);
+            request(app)
+                .get('/contact/message')
+                .expect(200)
+                .end((err, res) => {
+                    if (err)
+                        return done(err);
+                    expect(res.body).to.be.an('array');
+                    done();
+                });
+        });
+    })   
 });
+
 
 describe('Login API', () => {
     it('should login with valid credentials', function(done) {

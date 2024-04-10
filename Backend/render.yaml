@@ -1,5 +1,0 @@
-services:
-  - name: backend
-    plan: starter
-    buildCommand: npm run build
-    startCommand: npm start

@@ -467,7 +467,7 @@ app.get('/contact/message', async (req, res) => {
         res.status(200).json(message);
     }
     catch (error) {
-        res.status(400).json(error);
+        res.status(500).json(error);
     }
 });
 // blogs
