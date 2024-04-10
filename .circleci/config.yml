@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Deploy to Render
           command: |
-            curl -X POST -H "Content-Type: application/json" -d '{"branch":"main"}' -u "kirengamartial@gmail.com:$julienn1w" https://api.render.com/v1/deploys
+            curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer rnd_eWSkUvQpjWDBONXu2C3xbPE59eau" -d '{"branch":"main"}' https://api.render.com/v1/deploys
 
 workflows:
   version: 2
