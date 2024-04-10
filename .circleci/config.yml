@@ -3,18 +3,17 @@ jobs:
   build:
     docker:
       - image: circleci/node:14
-    working_directory: ./Backend
     steps:
       - checkout
       - run:
           name: Install dependencies
-          command: npm install
+          command: cd Backend && npm install
       - run:
           name: Build
-          command: npm run build
+          command: cd Backend && npm run build
       - run:
           name: testing
-          command: npm run test
+          command: cd Backend && npm run test
 
   deploy:
     docker:
