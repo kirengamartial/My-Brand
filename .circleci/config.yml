@@ -18,7 +18,6 @@ jobs:
   deploy:
     docker:
       - image: circleci/node:14
-    working_directory: ./Backend
     steps:
       - checkout
       - run:
