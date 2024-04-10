@@ -1,14 +1,5 @@
 version: 2.1
 jobs:
-  test:
-    docker:
-      - image: cimg/node:21.7.1
-    steps:
-      - checkout
-      - run:
-          name: Test API
-          command: cd Backend && npm run test
-
   build:
     docker:
       - image: cimg/node:21.7.1
@@ -20,6 +11,15 @@ jobs:
       - run:
           name: Build
           command: cd Backend && npm run build
+
+  test:
+    docker:
+      - image: cimg/node:21.7.1
+    steps:
+      - checkout
+      - run:
+          name: Test API
+          command: cd Backend && npm run test
 
   deploy:
     docker:
