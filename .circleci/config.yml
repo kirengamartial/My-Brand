@@ -5,10 +5,10 @@ jobs:
       - image: cimg/node:21.7.1
     steps:
       - checkout
-      - run: 
+      - run:
           name: Test API
           command: cd Backend && npm run test
-jobs:
+
   build:
     docker:
       - image: cimg/node:21.7.1
