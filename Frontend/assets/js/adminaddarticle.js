@@ -68,33 +68,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }));
-    Form.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, function* () {
-        e.preventDefault();
-        const inputPhoto = document.getElementById('photo').value;
-        const inputTitle = document.getElementById('title').value;
-        const inputDescription = document.getElementById('desc').value;
-        try {
-            const res = yield fetch('/blog', {
-                method: 'POST',
-                body: JSON.stringify({
-                    photo: inputPhoto,
-                    title: inputTitle,
-                    description: inputDescription
-                }),
-                headers: { 'Content-type': 'application/json' },
-                credentials: 'include'
-            });
-            const data = yield res.json();
-            if (data.message) {
-                location.assign('/article');
+    Form.addEventListener('submit', function (e) {
+        return __awaiter(this, void 0, void 0, function* () {
+            e.preventDefault();
+            const formData = new FormData(this);
+            try {
+                const res = yield fetch('/blog', {
+                    method: 'POST',
+                    body: formData,
+                    credentials: 'include'
+                });
+                const data = yield res.json();
+                if (data.message) {
+                    location.assign('/article');
+                }
+                else if (data.err) {
+                    console.log(data.err);
+                }
+                else {
+                    console.log('there is an error');
+                }
             }
-            if (data.error) {
-                console.log(data.error);
+            catch (error) {
+                console.log(error);
             }
-        }
-        catch (error) {
-        }
-    }));
+        });
+    });
     fetch('/api/user', { credentials: 'include' })
         .then(response => response.json())
         .then(user => updateUserUI(user))

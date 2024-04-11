@@ -79,11 +79,11 @@
             <h2 class="section__title">Edit  an Article</h2>
 
             <div class="Add-article__container container grid" >
-            <form id="edit-form" class="form__content">
+            <form id="edit-form" class="form__content" enctype="multipart/form-data">
                 <input type="hidden" id="articleId">
-                <input class="add__admin" type="text" id="photo" name="photo" placeholder="photo url" >
-                <input class="add__admin" type="text" name="" id="title" placeholder="Title">
-                <textarea class="add__admin" name="desc" id="description" cols="30" rows="10" placeholder="Description"></textarea>
+                <input class="add__admin" type="file" id="photo" name="my_image" placeholder="photo url" >
+                <input class="add__admin" type="text" name="title" id="title" placeholder="Title">
+                <textarea class="add__admin" name="description" id="description" cols="30" rows="10" placeholder="Description"></textarea>
                 <button type="submit" class="add__button">Edit article</button>
             </form>
 

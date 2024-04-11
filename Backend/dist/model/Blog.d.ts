@@ -24,7 +24,10 @@
 /// <reference types="mongoose/types/inferschematype" />
 import mongoose, { Document } from 'mongoose';
 interface Blog extends Document {
-    photo: string;
+    photo: {
+        public_id: string;
+        secure_url: string;
+    };
     title: string;
     description: string;
 }

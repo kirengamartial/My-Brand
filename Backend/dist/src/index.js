@@ -15,6 +15,8 @@ import Blog from '../model/Blog.js';
 import Comment from '../model/Comment.js';
 import { fileURLToPath } from 'url';
 dotenv.config();
+import cloudinary from './cloudinary.js';
+import upload from './multer.js';
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -607,181 +609,78 @@ app.get('/api/blog/:id', async (req, res) => {
         res.status(400).json(error);
     }
 });
-/**
- * @swagger
- * /blog:
- *   post:
- *     summary: Create a new blog
- *     description: Create a new blog entry with provided information.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               photo:
- *                 type: string
- *                 description: URL of the blog photo.
- *               title:
- *                 type: string
- *                 description: Title of the blog.
- *               description:
- *                 type: string
- *                 description: Description or content of the blog.
- *     security:
- *       - cookieAuth: []
- *     responses:
- *       '200':
- *         description: Blog created successfully.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Success message.
- *                 id:
- *                   type: string
- *                   description: ID of the created blog.
- *       '400':
- *         description: Bad request. Error occurred while creating the blog.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   description: Error message.
- */
-/**
- * @swagger
- * components:
- *   schemas:
- *     cookieAuth:
- *       type: apiKey
- *       in: cookie
- *       name: jwt
- *       description: JWT token to authenticate the user.
- */
 app.post('/blog', async (req, res) => {
-    try {
-        const { photo, title, description } = req.body;
-        const blog = await new Blog({ photo, title, description });
-        await blog.save();
-        res.status(200).json({ message: 'created a blog successfully', id: blog._id });
-    }
-    catch (error) {
-        console.log(error);
-        res.status(400).json({ error });
-    }
-});
-/**
- * @swagger
- * /blog/{id}:
- *   put:
- *     summary: Update a blog by ID
- *     description: Update an existing blog entry in the database by its ID.
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID of the blog to update.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               photo:
- *                 type: string
- *                 description: Updated URL of the blog photo.
- *               title:
- *                 type: string
- *                 description: Updated title of the blog.
- *               description:
- *                 type: string
- *                 description: Updated description or content of the blog.
- *     security:
- *       - cookieAuth: []
- *     responses:
- *       '200':
- *         description: Blog updated successfully.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Blog'
- *       '404':
- *         description: Blog not found.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message indicating blog not found.
- *       '500':
- *         description: Internal server error.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Error message indicating server error.
- *
- *     components:
- *       schemas:
- *         Blog:
- *           type: object
- *           properties:
- *             _id:
- *               type: string
- *               description: Unique identifier for the blog.
- *             title:
- *               type: string
- *               description: Title of the blog.
- *             description:
- *               type: string
- *               description: Description or content of the blog.
- *             photo:
- *               type: string
- *               description: URL of the blog photo.
- *           required:
- *             - title
- *             - description
- *             - photo
- *       cookieAuth:
- *         type: apiKey
- *         in: cookie
- *         name: jwt
- *         description: JWT token to authenticate the user.
- */
-app.put('/blog/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { photo, title, description } = req.body;
-        const blog = await Blog.findById(id);
-        if (!blog) {
-            return res.status(404).json({ message: 'Blog not found' });
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).json({ err });
         }
-        blog.photo = photo || blog.photo;
-        blog.title = title || blog.title;
-        blog.description = description ?? blog.description;
-        await blog.save();
-        res.status(200).json(blog);
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server Error' });
-    }
+        if (req.file === undefined) {
+            return res.status(400).json({ err: 'Please select an image' });
+        }
+        try {
+            const result = await cloudinary.uploader.upload(req.file.path, {
+                folder: "My_brand"
+            });
+            const { title, description } = req.body;
+            const blog = new Blog({
+                photo: {
+                    public_id: result.public_id,
+                    secure_url: result.secure_url
+                },
+                title,
+                description
+            });
+            await blog.save();
+            return res.status(200).json({
+                message: 'Created a blog successfully',
+                id: blog._id,
+                photo: blog.photo.secure_url
+            });
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Server error' });
+        }
+    });
+});
+app.put('/blog/:id', async (req, res) => {
+    upload(req, res, async (err) => {
+        if (err) {
+            res.status(400).json({ err });
+        }
+        else {
+            try {
+                const { id } = req.params;
+                const { title, description } = req.body;
+                const blog = await Blog.findById(id);
+                if (!blog) {
+                    return res.status(404).json({ message: 'Blog not found' });
+                }
+                let result;
+                if (req.file) {
+                    result = await cloudinary.uploader.upload(req.file.path, {
+                        folder: "My_brand"
+                    });
+                }
+                else {
+                    result = {
+                        secure_url: blog.photo.secure_url,
+                        public_id: blog.photo.public_id
+                    };
+                }
+                blog.photo.secure_url = result.secure_url;
+                blog.photo.public_id = result.public_id;
+                blog.title = title || blog.title;
+                blog.description = description ?? blog.description;
+                await blog.save();
+                res.status(200).json(blog);
+            }
+            catch (error) {
+                console.error(error);
+                res.status(500).json({ message: 'Server Error' });
+            }
+        }
+    });
 });
 /**
  * @swagger

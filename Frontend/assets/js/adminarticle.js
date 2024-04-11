@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             articleDiv.classList.add('article', 'grid');
             articleDiv.innerHTML = `
                 <div class="article__img">
-                    <img src="${article.photo}"  alt="">
+                    <img src="${article.photo.secure_url}"  alt="">
                 </div>
                 <p>${article.title}</p>
                 <div>

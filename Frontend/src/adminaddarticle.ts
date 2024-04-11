@@ -65,33 +65,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
 
-    Form.addEventListener('submit', async(e) => {
+    Form.addEventListener('submit', async function(e) {
         e.preventDefault();
-
-        const inputPhoto = (document.getElementById('photo') as HTMLInputElement).value;
-        const inputTitle = (document.getElementById('title') as HTMLInputElement).value;
-        const inputDescription = (document.getElementById('desc') as HTMLInputElement).value;
+        const formData = new FormData(this)
 
         try {
             const res = await fetch('/blog', {
                 method: 'POST',
-                body: JSON.stringify({
-                    photo: inputPhoto,
-                    title: inputTitle,
-                    description: inputDescription
-                }),
-                headers: {'Content-type': 'application/json'},
+                body: formData,
                 credentials: 'include'
             })
             const data = await res.json()
             if(data.message) {
                location.assign('/article')
-            }
-            if(data.error) {
-                console.log(data.error)
+            } else if(data.err) {
+                console.log(data.err)
+            } else {
+                console.log('there is an error')
             }
         } catch (error) {
-            
+            console.log(error)
         }
 
         

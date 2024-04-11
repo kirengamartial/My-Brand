@@ -17,7 +17,7 @@ fetch(`/api/blog/${BlogId}`, {credentials: 'include'})
 .then(data => {
 blogDiv.innerHTML = `
 <div class="image">
-<img src="${data.photo}" alt="">
+<img src="${data.photo.secure_url}" alt="">
 </div>
 <div>
 <p>${data.description}</p>

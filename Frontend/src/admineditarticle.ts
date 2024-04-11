@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Populate form fields with blog data
             console.log(id);
             console.log(blog);
-            photoInput.value = blog.photo;
             titleInput.value = blog.title;
             descriptionInput.value = blog.description;
             articleIdInput.value = blog.id;
@@ -25,20 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error fetching blog data:', error));
 
     // Handle form submission
-    editForm.addEventListener('submit', (e) => {
+    editForm.addEventListener('submit', function(e)  {
         e.preventDefault();
 
-        const formData = {
-            photo: photoInput.value,
-            title: titleInput.value,
-            description: descriptionInput.value
-        };
+        const formData = new FormData(this)
 
         // Send PUT request to update blog
         fetch(`/blog/${id}`, {
             method: 'PUT',
-            body: JSON.stringify( formData),
-            headers: {'Content-type': 'application/json'},
+            body: formData,
             credentials: 'include'
         })
         .then(response => response.json())

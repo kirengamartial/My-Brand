@@ -1,8 +1,12 @@
 import mongoose, { Schema } from 'mongoose';
 const blogSchema = new Schema({
     photo: {
-        type: String,
-        required: true
+        public_id: {
+            type: String
+        },
+        secure_url: {
+            type: String
+        }
     },
     title: {
         type: String,

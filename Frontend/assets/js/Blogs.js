@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
           
         <a href="/blogss/${data._id}" class="Blog__content">
                     <div class="image-container">
-                        <img src="${data.photo}" alt="">
+                        <img src="${data.photo.secure_url}" alt="">
                     </div>
                 
                     <div class="content-container">

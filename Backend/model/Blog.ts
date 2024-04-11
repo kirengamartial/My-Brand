@@ -1,15 +1,22 @@
 import mongoose, {Schema, Document} from 'mongoose'
 
 interface Blog extends Document {
-    photo: string,
+    photo: {
+        public_id: string,
+        secure_url: string
+    },
     title: string,
     description: string
 }
 
 const blogSchema = new Schema({
     photo: {
-        type: String,
-        required: true
+       public_id: {
+        type: String
+       },
+       secure_url: {
+        type: String
+       }
     },
     title: {
         type: String,
