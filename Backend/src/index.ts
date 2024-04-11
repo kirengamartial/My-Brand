@@ -747,8 +747,6 @@ app.put('/blog/:id', async (req: Request, res: Response) => {
   });
 });
 
-
-
 /**
  * @swagger
  * /blog/{id}:
