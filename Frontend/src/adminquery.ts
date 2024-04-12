@@ -69,6 +69,7 @@ const updateUserUiInfo = (user: any) => {
                 ${user.username}
             </a>
             <ul class="dropdown-content">
+                <li><a href="/profile/${user._id}">profile</a></li>
                 <li><a id="logout" href="#">Logout</a></li>
             </ul>
         `;

@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     const editForm = document.getElementById('edit-form') as HTMLFormElement;
-    const photoInput = document.getElementById('photo') as HTMLInputElement;
     const titleInput = document.getElementById('title') as HTMLInputElement;
     const descriptionInput = document.getElementById('description') as HTMLTextAreaElement;
     const articleIdInput = document.getElementById('articleId') as HTMLInputElement;
@@ -63,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${user.username}
                 </a>
                 <ul class="dropdown-content">
+                    <li><a href="/profile/${user._id}">profile</a></li>
                     <li ><a id="logout" href="#">Logout</a></li>
                 </ul>
             `;
@@ -74,10 +74,27 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             Admin.innerHTML = '';
         }
-        fetch('/api/user', { credentials: 'include' })
-        .then(response => response.json())
-        .then(user => updateUserUI(user))
-        .catch(error => console.error('Error fetching user data:', error));
     };
+
+    fetch('/api/user', { credentials: 'include' })
+    .then(response => response.json())
+    .then(user => updateUserUI(user))
+    .catch(error => console.error('Error fetching user data:', error));
+
+    document.addEventListener('click', async (e) => {
+        if (e.target instanceof HTMLElement && e.target.id === 'logout') {
+            e.preventDefault();
+            try {
+                await fetch('/logout', {
+                    method: 'POST', 
+                    credentials: 'include' 
+                });
+                updateUserUI(null); 
+                location.assign('/register')
+            } catch (error) {
+                console.error('Error logging out:', error);
+            }
+        }
+    });
 
 });
