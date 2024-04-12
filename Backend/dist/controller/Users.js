@@ -100,7 +100,10 @@ const cookieToken = (id) => {
 export const createUser = async (req, res) => {
     try {
         const { username, email, password } = req.body;
-        const user = new User({ username, email, password });
+        const saltRounds = 10;
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashpassword = await bcrypt.hash(password, salt);
+        const user = new User({ username, email, password: hashpassword });
         await user.save();
         const token = cookieToken(user._id);
         res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true, path: '/' });
@@ -114,7 +117,16 @@ export const createUser = async (req, res) => {
             };
             return res.status(400).json({ error: errors });
         }
-        res.status(400).json({ error: 'An error occurred while creating the user' });
+        res.status(400).json({ error });
+    }
+};
+export const gellAllusers = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+    }
+    catch (error) {
+        console.log(error);
     }
 };
 export const getUser = (req, res) => {
@@ -129,10 +141,10 @@ export const getUser = (req, res) => {
 export const editUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { username, email, password } = req.body;
+        const { username, email, password } = req.body; // Remove 'password' from here
         const user = await User.findById(id);
-        if (user === null) {
-            return res.status(400).json('there is no user');
+        if (!user) {
+            return res.status(400).json('There is no user');
         }
         else {
             user.username = username || user.username;
@@ -141,6 +153,10 @@ export const editUser = async (req, res) => {
                 const salt = await bcrypt.genSalt();
                 const hashpassword = await bcrypt.hash(password, salt);
                 user.password = hashpassword;
+                console.log(user.password, { "changed password": password });
+            }
+            else {
+                user.password = user.password;
             }
             await user.save();
             return res.status(200).json({ msg: 'Edited successfully' });
@@ -148,7 +164,7 @@ export const editUser = async (req, res) => {
     }
     catch (error) {
         console.log(error);
-        return res.status(500).json(error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
 };
 //   login user

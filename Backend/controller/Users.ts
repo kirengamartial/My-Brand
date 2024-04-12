@@ -111,27 +111,39 @@ const userSchema = Joi.object({
 
   export const createUser = async(req: Request, res: Response) => {
     try {
-        const {username, email, password} = req.body
-        const user = new User({username, email, password})
-        await user.save()
-        const token =  cookieToken(user._id)
-        res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true,  path: '/'})
-        res.status(200).json({ user: user._id})
+        const { username, email, password } = req.body;
+        const saltRounds = 10;
+        const salt = await bcrypt.genSalt(saltRounds);
+        const hashpassword = await bcrypt.hash(password, salt);
+        const user = new User({ username, email, password: hashpassword });
+        await user.save();
+        const token =  cookieToken(user._id);
+        res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true,  path: '/'});
+        res.status(200).json({ user: user._id });
 
     } catch (error) {
      
-      const duplicateEmailErrorMessage = handleDuplicateEmailError(error);
-      if (duplicateEmailErrorMessage) {
-        const errors = {
-          email: duplicateEmailErrorMessage
+        const duplicateEmailErrorMessage = handleDuplicateEmailError(error);
+        if (duplicateEmailErrorMessage) {
+            const errors = {
+                email: duplicateEmailErrorMessage
+            };
+            return res.status(400).json({ error: errors });
         }
-        return res.status(400).json({ error: errors});
-      }
-      res.status(400).json({ error: 'An error occurred while creating the user' });
-        
+        res.status(400).json({ error });
     }
-}
+};
 
+export const gellAllusers = async(req: Request, res: Response) => {
+  try {
+    const users = await User.find()
+    res.status(200).json(users)
+  } catch (error) {
+    console.log(error)
+  }
+  
+  
+}
 
 export const getUser = (req: Request, res: Response) => {
     const user = res.locals.user;
@@ -142,32 +154,36 @@ export const getUser = (req: Request, res: Response) => {
     }
   }
 
- export const editUser = async (req: Request, res: Response) => {
+  export const editUser = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { username, email, password } = req.body;
+        const { username, email, password } = req.body; // Remove 'password' from here
         const user = await User.findById(id);
   
-        if (user === null) {
-            return res.status(400).json('there is no user');
+        if (!user) {
+            return res.status(400).json('There is no user');
         } else {
             user.username = username || user.username;
             user.email = email || user.email;
-  
-            if (password !== null && password !== undefined && password.trim() !== '') { 
-                const salt = await bcrypt.genSalt();
-                const hashpassword = await bcrypt.hash(password, salt);
-                user.password = hashpassword;
+
+            if(password !== null && password !== undefined && password.trim() !== '') {
+              const salt = await bcrypt.genSalt()
+              const hashpassword = await bcrypt.hash(password, salt)
+              user.password = hashpassword
+              console.log(user.password,  {"changed password": password})
+            } else {
+              user.password = user.password
             }
-  
+            
             await user.save();
             return res.status(200).json({ msg: 'Edited successfully' });
         }
     } catch (error) {
         console.log(error);
-        return res.status(500).json(error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
-  } 
+}
+
 
 
 //   login user
