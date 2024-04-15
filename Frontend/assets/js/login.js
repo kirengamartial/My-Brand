@@ -32,12 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 credentials: "include"
             });
             const data = yield res.json();
-            if (data.user) {
-                window.location.href = 'index.html';
-            }
-            if (data.message) {
-                Errors.innerHTML = data.message;
-            }
+            console.log(data);
+            // if(data.user) {
+            //   window.location.href = 'index.html'
+            // }
+            // if(data.message) {
+            //     Errors.innerHTML = data.message
+            // }
         }
         catch (error) {
             console.log(error);
