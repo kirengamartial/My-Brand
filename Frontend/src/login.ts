@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             const data = await res.json()
                console.log(data)
-            // if(data.user) {
-            //   window.location.href = 'index.html'
-            // }
+            if(data.user) {
+              window.location.href = 'index.html'
+            }
 
-            // if(data.message) {
-            //     Errors.innerHTML = data.message
-            // }
+            if(data.message) {
+                Errors.innerHTML = data.message
+            }
 
         } catch (error) {
             console.log(error)
