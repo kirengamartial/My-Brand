@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        fetch('https://my-brand-aqrf.onrender.com/api/user', { credentials: 'include' })
+        fetch('http://localhost:3000/api/user', { credentials: 'include' })
         .then(response => response.json())
         .then(user => updateUserUI(user))
         .catch(error => console.error('Error fetching user data:', error));

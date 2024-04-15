@@ -1,9 +1,11 @@
-import express from "express";
+import express, {Request, Response, NextFunction} from "express";
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
 import path from "path";
 import cookieParser from 'cookie-parser'
-import {checkUser} from '../middleware/authMiddleware.js'
+// import {checkUser} from '../middleware/authMiddleware.js'
+import User from '../model/Users.js'
+import jwt from 'jsonwebtoken'
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 import cors from 'cors'
@@ -11,7 +13,7 @@ import { fileURLToPath } from 'url';
 
 
 dotenv.config()
-import htmlRouter from '../routes/HtmlFiles.js'
+// import htmlRouter from '../routes/HtmlFiles.js'
 import userRouter from '../routes/Users.js'
 import messageRouter from '../routes/Message.js'
 import blogRouter from '../routes/Blog.js'
@@ -100,13 +102,45 @@ app.use('/assets', express.static(staticPath));
 mongoose.connect(process.env.MONGODB_URL!)
     .then(res => console.log('connected successfully to the database'))
     .catch(error => console.log('Error connecting to database', error));
-app.get('*', checkUser);
+// app.get('*', checkUser);
 
-app.use('/', htmlRouter)
+// app.use('/', htmlRouter)
 app.use('/', userRouter)
 app.use('/', messageRouter)
 app.use('/', blogRouter)
 app.use('/', commentRouter)
+
+
+const checkUser = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.cookies.jwt
+  if(token) {
+    jwt.verify(token, process.env.JWT_SECRET!, async(err: jwt.VerifyErrors | null, decodedinfo: any) => {
+   if(err) {
+      console.log(err)
+      res.locals.user = null
+      next()
+   } else {
+      let user = await User.findById(decodedinfo.id)
+      console.log(user)
+      res.locals.user = user
+      next()
+   }
+    })
+  }else {
+      res.locals.user = null
+      next()
+  }
+}
+app.get('/api/user', checkUser, (req: Request, res: Response) => {
+  const user = res.locals.user;
+  console.log(user)
+  if (user) {
+      res.status(200).json(user);
+  } else {
+      res.status(404).json({ error: 'User data not found' });
+  }
+})
+
 
 
 export default app
