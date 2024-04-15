@@ -220,7 +220,7 @@ export const loginUser = async (req, res) => {
             if (auth) {
                 const token = cookieToken(user._id);
                 res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true, path: '/' });
-                res.status(200).json({ user: user._id });
+                res.redirect('https://kirengamartial.github.io/My-Brand/Frontend/index.html');
             }
             else {
                 res.status(400).json({ message: 'password is incorrect' });
