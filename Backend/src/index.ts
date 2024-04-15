@@ -21,11 +21,12 @@ import commentRouter from '../routes/Comment.js'
 
 const app = express()
 app.use(express.json())
-app.use(cookieParser())
 app.use(cors({
   origin: 'https://kirengamartial.github.io',
   credentials: true
 }))
+app.use(cookieParser())
+
 
 const options = {
   definition: {
