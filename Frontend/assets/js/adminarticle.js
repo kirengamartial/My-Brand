@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target instanceof HTMLElement && e.target.id === 'logout') {
             e.preventDefault();
             try {
-                yield fetch('/logout', {
+                yield fetch('https://my-brand-aqrf.onrender.com/logout', {
                     method: 'POST',
                     credentials: 'include'
                 });

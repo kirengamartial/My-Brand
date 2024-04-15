@@ -25,7 +25,7 @@ form.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, functio
     const question = document.getElementById('contact-question').value;
     const message = document.getElementById('contact-message').value;
     try {
-        const res = yield fetch('/contact', {
+        const res = yield fetch('https://my-brand-aqrf.onrender.com/contact', {
             method: 'POST',
             body: JSON.stringify({
                 name: name,
@@ -94,7 +94,7 @@ document.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, func
     if (e.target instanceof HTMLElement && e.target.id === 'logout') {
         e.preventDefault();
         try {
-            yield fetch('/logout', {
+            yield fetch('https://my-brand-aqrf.onrender.com/logout', {
                 method: 'POST',
                 credentials: 'include'
             });
@@ -106,7 +106,7 @@ document.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, func
         }
     }
 }));
-fetch('/api/user', { credentials: 'include' })
+fetch('https://my-brand-aqrf.onrender.com/api/user', { credentials: 'include' })
     .then(response => response.json())
     .then(user => updateUserUII(user))
     .catch(error => console.error('Error fetching user data:', error));

@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target instanceof HTMLElement && e.target.id === 'logout') {
             e.preventDefault();
             try {
-                yield fetch('/logout', {
+                yield fetch('https://my-brand-aqrf.onrender.com/logout', {
                     method: 'POST',
                     credentials: 'include'
                 });
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const formData = new FormData(this);
             try {
-                const res = yield fetch('/blog', {
+                const res = yield fetch('https://my-brand-aqrf.onrender.com/blog', {
                     method: 'POST',
                     body: formData,
                     credentials: 'include'
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    fetch('/api/user', { credentials: 'include' })
+    fetch('https://my-brand-aqrf.onrender.com/api/user', { credentials: 'include' })
         .then(response => response.json())
         .then(user => updateUserUI(user))
         .catch(error => console.error('Error fetching user data:', error));

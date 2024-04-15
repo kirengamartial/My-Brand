@@ -20,7 +20,7 @@ hamburgerrr.addEventListener("click", () => {
     navMenuuu.classList.toggle("active");
 });
 const BlogId = window.location.pathname.split('/').pop();
-fetch(`/api/blog/${BlogId}`, { credentials: 'include' })
+fetch(`https://my-brand-aqrf.onrender.com/api/blog/${BlogId}`, { credentials: 'include' })
     .then(res => res.json())
     .then(data => {
     blogDiv.innerHTML = `
@@ -68,7 +68,7 @@ commentForm.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, 
         console.error('Error submitting comment:', error);
     }
 }));
-fetch('/comment', { credentials: 'include' })
+fetch('https://my-brand-aqrf.onrender.com/comment', { credentials: 'include' })
     .then(res => res.json())
     .then(datas => {
     datas.forEach((data) => {
@@ -123,7 +123,7 @@ document.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, func
     if (e.target instanceof HTMLElement && e.target.id === 'logout') {
         e.preventDefault();
         try {
-            yield fetch('/logout', {
+            yield fetch('https://my-brand-aqrf.onrender.com/logout', {
                 method: 'POST',
                 credentials: 'include'
             });

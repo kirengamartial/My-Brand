@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector(".hamburger") as HTMLElement;
     const navMenu = document.querySelector(".nav__list") as HTMLElement;
     const Form = document.getElementById('login__form') as HTMLFormElement;
-    const loginDiv = document.querySelector('.nav__login') as HTMLElement;
-    const Admin = document.querySelector('.admin') as HTMLElement;
     const Errors = document.querySelector(".error") as HTMLElement;
 
     hamburger.addEventListener("click", () => {

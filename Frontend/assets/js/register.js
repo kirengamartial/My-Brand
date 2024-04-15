@@ -40,7 +40,7 @@ if (Form) {
             ErrorsEmail.innerHTML = '';
         }
         try {
-            const res = yield fetch('http://localhost:3000/users', {
+            const res = yield fetch('https://my-brand-aqrf.onrender.com/users', {
                 method: 'POST',
                 body: JSON.stringify({
                     username: inputUsername,
@@ -68,7 +68,7 @@ if (Form) {
                 }
             }
             if (data.user) {
-                location.assign('/');
+                location.assign('/index.html');
             }
         }
         catch (error) {

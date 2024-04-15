@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector(".hamburger");
     const navMenu = document.querySelector(".nav__list");
     const Form = document.getElementById('login__form');
-    const loginDiv = document.querySelector('.nav__login');
-    const Admin = document.querySelector('.admin');
     const Errors = document.querySelector(".error");
     hamburger.addEventListener("click", () => {
         hamburger.classList.toggle("active");
@@ -24,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const useremail = document.getElementById('user_email').value;
         const password = document.getElementById('password').value;
         try {
-            const res = yield fetch('/login', {
+            const res = yield fetch('https://my-brand-aqrf.onrender.com/login', {
                 method: 'POST',
                 body: JSON.stringify({
                     email: useremail,
@@ -35,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const data = yield res.json();
             if (data.user) {
-                location.assign('/');
+                location.assign('/index.html');
             }
             if (data.message) {
                 Errors.innerHTML = data.message;
