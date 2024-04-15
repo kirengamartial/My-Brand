@@ -106,7 +106,7 @@ export const createUser = async (req, res) => {
         const user = new User({ username, email, password: hashpassword });
         await user.save();
         const token = cookieToken(user._id);
-        res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true, path: '/', secure: true });
+        res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, path: '/', secure: true });
         res.status(200).json({ user: user._id });
     }
     catch (error) {
@@ -219,7 +219,7 @@ export const loginUser = async (req, res) => {
             const auth = await bcrypt.compare(password, user.password);
             if (auth) {
                 const token = cookieToken(user._id);
-                res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true, path: '/' });
+                res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, path: '/' });
                 res.status(200).json({ user: user._id });
             }
             else {
