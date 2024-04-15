@@ -37,7 +37,7 @@ function displayUserMessage(userMessage: any): void {
 }
 
 
-fetch('/contact/message')
+fetch('https://my-brand-aqrf.onrender.com/contact/message')
 .then(res => res.json())
 .then(data => displayUserMessage(data))
 .catch(error => console.log(error))
@@ -108,7 +108,7 @@ document.addEventListener('click', async (e) => {
 });
 
 
-fetch('/api/user', { credentials: 'include' })
+fetch('https://my-brand-aqrf.onrender.com/api/user', { credentials: 'include' })
 .then(response => response.json())
 .then(user => updateUserUiInfo(user))
 .catch(error => console.error('Error fetching user data:', error));

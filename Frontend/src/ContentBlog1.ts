@@ -12,7 +12,7 @@ hamburgerrr.addEventListener("click", () => {
 });
 
 const BlogId = window.location.pathname.split('/').pop()
-fetch(`/api/blog/${BlogId}`, {credentials: 'include'})
+fetch(`https://my-brand-aqrf.onrender.com/api/blog/${BlogId}`, {credentials: 'include'})
 .then(res => res.json())
 .then(data => {
 blogDiv.innerHTML = `
@@ -63,7 +63,7 @@ commentForm.addEventListener('submit', async (e: Event) => {
     }
 });
 
-    fetch('/comment', {credentials: 'include'})
+    fetch('https://my-brand-aqrf.onrender.com/comment', {credentials: 'include'})
     .then(res => res.json())
     .then(datas => {
         datas.forEach((data: any) => {
@@ -123,7 +123,7 @@ document.addEventListener('click', async (e) => {
     if (e.target instanceof HTMLElement && e.target.id === 'logout') {
         e.preventDefault();
         try {
-            await fetch('/logout', {
+            await fetch('https://my-brand-aqrf.onrender.com/logout', {
                 method: 'POST', 
                 credentials: 'include' 
             });

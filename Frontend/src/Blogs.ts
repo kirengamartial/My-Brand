@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    fetch('/blog', {credentials: 'include'})
+    fetch('https://my-brand-aqrf.onrender.com/blog', {credentials: 'include'})
     .then(res => res.json())
     .then(datas => {
       datas.forEach((data: any) => {
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-fetch('/api/user', { credentials: 'include' })
+fetch('https://my-brand-aqrf.onrender.com/api/user', { credentials: 'include' })
 .then(response => response.json())
 .then(user => updateUserUI(user))
 .catch(error => console.error('Error fetching user data:', error));

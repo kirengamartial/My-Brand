@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = (document.getElementById('password') as HTMLInputElement).value;
 
         try {
-            const res = await fetch('/login', {
+            const res = await fetch('https://my-brand-aqrf.onrender.com/login', {
                 method: 'POST',
                 body: JSON.stringify({
                     email: useremail,
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json()
 
             if(data.user) {
-               location.assign('/')
+               location.assign('/index.html')
             }
 
             if(data.message) {

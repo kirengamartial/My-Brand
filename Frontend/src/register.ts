@@ -36,7 +36,7 @@ if (Form) {
         }
 
         try {
-                const res = await fetch('http://localhost:3000/users',{
+                const res = await fetch('https://my-brand-aqrf.onrender.com/users',{
                     method: 'POST',
                     body: JSON.stringify({ 
                         username: inputUsername,
@@ -66,7 +66,7 @@ if (Form) {
                    
                 }
                 if(data.user) {
-                    location.assign('/');
+                    location.assign('/index.html');
                 }
                 
            

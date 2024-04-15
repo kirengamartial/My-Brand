@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target instanceof HTMLElement && e.target.id === 'logout') {
             e.preventDefault();
             try {
-                await fetch('/logout', {
+                await fetch('https://my-brand-aqrf.onrender.com/logout', {
                     method: 'POST', 
                     credentials: 'include' 
                 });
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    fetch('/api/user', { credentials: 'include' })
+    fetch('https://my-brand-aqrf.onrender.com/api/user', { credentials: 'include' })
     .then(response => response.json())
     .then(user => updateUserUI(user))
     .catch(error => console.error('Error fetching user data:', error));;
