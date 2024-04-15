@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const data = yield res.json();
             if (data.user) {
-                location.assign('/index.html');
+                location.assign('./index.html');
             }
             if (data.message) {
                 Errors.innerHTML = data.message;

@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json()
 
             if(data.user) {
-               location.assign('/index.html')
+               location.assign('./index.html')
             }
 
             if(data.message) {
