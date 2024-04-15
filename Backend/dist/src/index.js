@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'https://kirengamartial.github.io/',
+    origin: 'https://kirengamartial.github.io',
     credentials: true
 }));
 const options = {
