@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { checkUser } from '../middleware/authMiddleware.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 import { fileURLToPath } from 'url';
 dotenv.config();
 import htmlRouter from '../routes/HtmlFiles.js';
@@ -16,6 +17,10 @@ import commentRouter from '../routes/Comment.js';
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({
+    origin: 'https://kirengamartial.github.io/',
+    credentials: true
+}));
 const options = {
     definition: {
         openapi: "3.0.0",
