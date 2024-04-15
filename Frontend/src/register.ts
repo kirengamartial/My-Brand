@@ -66,7 +66,7 @@ if (Form) {
                    
                 }
                 if(data.user) {
-                    location.assign('/index.html');
+                    location.assign('index.html');
                 }
                 
            

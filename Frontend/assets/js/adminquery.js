@@ -98,7 +98,7 @@ document.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, func
                 credentials: 'include'
             });
             updateUserUiInfo(null);
-            location.assign('/register');
+            window.location.href = 'register.html';
         }
         catch (error) {
             console.error('Error logging out:', error);

@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {
             loginDiv.innerHTML = `
-                <a href="/logins" class="nav__link">
+                <a href="login.html" class="nav__link">
                     Sign in
                 </a>
             `;
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     credentials: 'include'
                 });
                 updateUserUI(null);
-                location.assign('/register');
+                window.location.href = 'register.html';
             }
             catch (error) {
                 console.error('Error logging out:', error);

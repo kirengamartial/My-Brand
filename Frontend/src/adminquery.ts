@@ -100,7 +100,7 @@ document.addEventListener('click', async (e) => {
                 credentials: 'include' 
             });
             updateUserUiInfo(null); 
-            location.assign('/register')
+            window.location.href = 'register.html'
         } catch (error) {
             console.error('Error logging out:', error);
         }

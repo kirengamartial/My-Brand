@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     credentials: 'include' 
                 });
                 updateUserUI(null); 
-                location.assign('/register')
+                window.location.href = 'register.html'
             } catch (error) {
                 console.error('Error logging out:', error);
             }
