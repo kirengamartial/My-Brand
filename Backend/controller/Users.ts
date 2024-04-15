@@ -241,7 +241,7 @@ export const gellAllusers = async(req: Request, res: Response) => {
         const auth = await bcrypt.compare(password, user.password)
         if(auth) {
            const token = cookieToken(user._id)
-           res.cookie('jwt', token, {maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true, secure: true, path: '/' })
+           res.cookie('jwt', token, {maxAge: 3 * 24 * 60 * 60 * 1000, httpOnly: true, path: '/' })
            res.status(200).json({user: user._id})
         }else { 
           res.status(400).json({message: 'password is incorrect'})
