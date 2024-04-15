@@ -106,7 +106,7 @@ export const createUser = async (req, res) => {
         const user = new User({ username, email, password: hashpassword });
         await user.save();
         const token = cookieToken(user._id);
-        res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, path: '/', secure: true });
+        res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, path: '/' });
         res.status(200).json({ user: user._id });
     }
     catch (error) {
@@ -129,14 +129,16 @@ export const gellAllusers = async (req, res) => {
         console.log(error);
     }
 };
-// export const getUser = (req: Request, res: Response) => {
-//     const user = res.locals.user;
-//     if (user) {
-//         res.status(200).json(user);
-//     } else {
-//         res.status(404).json({ error: 'User data not found' });
-//     }
-//   }
+export const getUser = (req, res) => {
+    const user = res.locals.user;
+    console.log(user);
+    if (user) {
+        res.status(200).json(user);
+    }
+    else {
+        res.status(404).json({ error: 'User data not found' });
+    }
+};
 export const editUser = async (req, res) => {
     try {
         const { id } = req.params;

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 export declare const validateUserInput: (req: Request, res: Response, next: NextFunction) => Response<any, Record<string, any>> | undefined;
 export declare const createUser: (req: Request, res: Response) => Promise<Response<any, Record<string, any>> | undefined>;
 export declare const gellAllusers: (req: Request, res: Response) => Promise<void>;
+export declare const getUser: (req: Request, res: Response) => void;
 export declare const editUser: (req: Request, res: Response) => Promise<Response<any, Record<string, any>>>;
 /**
  * @swagger
