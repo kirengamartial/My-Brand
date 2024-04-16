@@ -28,47 +28,6 @@ blogDiv.innerHTML = `
 
 
 
-commentForm.addEventListener('submit', async (e: Event) => {
-    e.preventDefault();
-    const commentInput = document.getElementById('comment') as HTMLInputElement;
-    const comment = commentInput.value;
-
-    try {
-        const response = await fetch('https://my-brand-aqrf.onrender.com/api/user', 
-        { credentials: 'include',
-          headers: {
-            "Authorization": `Bearer ${document.cookie.split('jwt=')[1]}`
-        }
-         });
-        const user = await response.json();
-        console.log(user)
-        if (user && user.username) {
-            const res = await fetch('https://my-brand-aqrf.onrender.com/comment', {
-                method: 'POST',
-                body: JSON.stringify({
-                    blog_id: BlogId,
-                    name: user.username,
-                    comment
-                }),
-                headers: { "Content-type": "application/json" },
-                credentials: 'include'
-            });
-            const data = await res.json();
-            if (data) {
-                commentDiv.innerHTML += `
-                    <div class='holder'>
-                        <h5>Name: ${data.name}</h5> 
-                        <p>${data.comment}</p>    
-                    </div>
-                `;
-            }
-        } else {
-            alert("Please log in to submit a comment.");
-        }
-    } catch (error) {
-        console.error('Error submitting comment:', error);
-    }
-});
 
     fetch('https://my-brand-aqrf.onrender.com/comment', {credentials: 'include'})
     .then(res => res.json())
@@ -148,6 +107,39 @@ fetch('https://my-brand-aqrf.onrender.com/api/user', {
 .then(user =>  {
     if(user) {
         updateUserUIII(user);
+        commentForm.addEventListener('submit', async (e: Event) => {
+            e.preventDefault();
+            const commentInput = document.getElementById('comment') as HTMLInputElement;
+            const comment = commentInput.value;
+        
+            try {
+                if (user && user.username) {
+                    const res = await fetch('https://my-brand-aqrf.onrender.com/comment', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            blog_id: BlogId,
+                            name: user.username,
+                            comment
+                        }),
+                        headers: { "Content-type": "application/json" },
+                        credentials: 'include'
+                    });
+                    const data = await res.json();
+                    if (data) {
+                        commentDiv.innerHTML += `
+                            <div class='holder'>
+                                <h5>Name: ${data.name}</h5> 
+                                <p>${data.comment}</p>    
+                            </div>
+                        `;
+                    }
+                } else {
+                    alert("Please log in to submit a comment.");
+                }
+            } catch (error) {
+                console.error('Error submitting comment:', error);
+            }
+        });
     }
 
 })
