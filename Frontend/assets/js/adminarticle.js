@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         Admin <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="dropdown-content">
-                        <li><a href="/query">Query</a></li>
-                        <li><a href="/article">Article</a></li>
+                        <li><a href="adminquery.html">Query</a></li>
+                        <li><a href="adminarticle.html">Article</a></li>
                     </ul>
                 `;
             }
@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             if (response.ok) {
                 console.log(`Article with ID ${id} deleted successfully`);
-                // Reload articles after deletion
                 fetch('/blog', { credentials: 'include' })
                     .then(res => res.json())
                     .then(data => displayArticle(data))

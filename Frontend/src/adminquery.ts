@@ -53,8 +53,8 @@ const updateUserUiInfo = (user: any) => {
                         Admin <i class="fas fa-chevron-down"></i>
                     </a>
                     <ul class="dropdown-content">
-                        <li><a href="/query">Query</a></li>
-                        <li><a href="/article">Article</a></li>
+                        <li><a href="adminquery.html">Query</a></li>
+                        <li><a href="adminarticle.html">Article</a></li>
                     </ul>
                 `;
             }
