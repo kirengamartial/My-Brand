@@ -34,8 +34,14 @@ commentForm.addEventListener('submit', async (e: Event) => {
     const comment = commentInput.value;
 
     try {
-        const response = await fetch('https://my-brand-aqrf.onrender.com/api/user', { credentials: 'include' });
+        const response = await fetch('https://my-brand-aqrf.onrender.com/api/user', 
+        { credentials: 'include',
+          headers: {
+            "Authorization": `Bearer ${document.cookie.split('jwt=')[1]}`
+        }
+         });
         const user = await response.json();
+        console.log(user)
         if (user && user.username) {
             const res = await fetch('https://my-brand-aqrf.onrender.com/comment', {
                 method: 'POST',
