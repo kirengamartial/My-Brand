@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             const data = await res.json()
             if(data.message) {
-               location.assign('adminarticle.html')
+               window.location.href = 'adminarticle.html'
             } else if(data.err) {
                 console.log(data.err)
             } else {
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         
     });
-    
+
     const cookie = document.cookie.split('jwt=')[1]
     fetch('https://my-brand-aqrf.onrender.com/api/user', { 
         credentials: 'include',

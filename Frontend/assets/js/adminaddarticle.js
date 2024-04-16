@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 const data = yield res.json();
                 if (data.message) {
-                    location.assign('adminarticle.html');
+                    window.location.href = 'adminarticle.html';
                 }
                 else if (data.err) {
                     console.log(data.err);
