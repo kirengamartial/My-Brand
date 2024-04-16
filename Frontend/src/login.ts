@@ -28,7 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await res.json()
                console.log(data)
             if(data.user) {
-              window.location.href = 'index.html'
+                const { token } = data
+                document.cookie= `jwt=${token}; path='/'; maxAge= 3 * 24 * 60 * 60 * 1000`
+                window.location.href = 'index.html'
             }
 
             if(data.message) {
