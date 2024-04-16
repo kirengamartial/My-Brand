@@ -72,7 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
         })
             .then(response => response.json())
             .then(user => {
-            updateUserUI(user);
+            if (user) {
+                updateUserUI(user);
+            }
         })
             .catch(error => console.error('Error fetching user data:', error));
     }
