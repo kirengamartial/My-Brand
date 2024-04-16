@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         credentials: 'include' 
                     });
                     updateUserUI(null); 
-                    document.cookie = `jwt=''; maxAge= 3 * 24 * 60 * 60 * 1000; path=/;`
+                    document.cookie = `jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
                     window.location.href = 'register.html'
                 } catch (error) {
                     console.error('Error logging out:', error);
