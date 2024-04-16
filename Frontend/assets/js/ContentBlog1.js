@@ -41,7 +41,7 @@ commentForm.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, 
         const response = yield fetch('/api/user', { credentials: 'include' });
         const user = yield response.json();
         if (user && user.username) {
-            const res = yield fetch('/comment', {
+            const res = yield fetch('https://my-brand-aqrf.onrender.com/comment', {
                 method: 'POST',
                 body: JSON.stringify({
                     blog_id: BlogId,

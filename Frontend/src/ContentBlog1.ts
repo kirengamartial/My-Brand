@@ -37,7 +37,7 @@ commentForm.addEventListener('submit', async (e: Event) => {
         const response = await fetch('/api/user', { credentials: 'include' });
         const user = await response.json();
         if (user && user.username) {
-            const res = await fetch('/comment', {
+            const res = await fetch('https://my-brand-aqrf.onrender.com/comment', {
                 method: 'POST',
                 body: JSON.stringify({
                     blog_id: BlogId,
