@@ -221,7 +221,7 @@ export const loginUser = async (req, res) => {
             const auth = await bcrypt.compare(password, user.password);
             if (auth) {
                 const token = cookieToken(user._id);
-                res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, path: '/' });
+                res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, path: '/', sameSite: 'none' });
                 res.status(200).json({ user: user._id });
             }
             else {
