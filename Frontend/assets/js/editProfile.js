@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             navMenu.classList.toggle("active");
         });
         const id = window.location.href.split("=").pop();
+        console.log(id);
         Form.addEventListener('submit', function (e) {
             return __awaiter(this, void 0, void 0, function* () {
                 e.preventDefault();

@@ -12,6 +12,7 @@ hamburgerrr.addEventListener("click", () => {
 });
 
 const BlogId = window.location.href.split("=").pop()
+console.log(BlogId)
 fetch(`https://my-brand-aqrf.onrender.com/api/blog/${BlogId}`, {credentials: 'include'})
 .then(res => res.json())
 .then(data => {

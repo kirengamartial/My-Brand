@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const id = window.location.href.split("=").pop()
+        console.log(id)
 
         Form.addEventListener('submit', async function(e) {
             e.preventDefault();
