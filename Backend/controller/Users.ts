@@ -118,6 +118,7 @@ const userSchema = Joi.object({
         const user = new User({ username, email, password: hashpassword });
         await user.save();
         const token =  cookieToken(user._id);
+        
         res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000,  path: '/My-Brand/Frontend/'});
         res.status(200).json({ user: user._id });
 
