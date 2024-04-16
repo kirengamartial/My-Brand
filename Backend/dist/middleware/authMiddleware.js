@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
 export const checkAuth = (req, res, next) => {
-    const token = req.cookies.jwt;
+    const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
         return res.redirect("back");
     }
