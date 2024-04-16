@@ -44,6 +44,7 @@ export const checkUser = (req: Request, res: Response, next: NextFunction) => {
         res.locals.user = user
         next()
      }
+     
       })
     }else {
         res.locals.user = null
