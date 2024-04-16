@@ -246,6 +246,7 @@ export const getUser = (req: Request, res: Response) => {
            res.cookie('jwt', token, {maxAge: 3 * 24 * 60 * 60 * 1000, path: '/My-Brand/Frontend/' })
            res.status(200).json({user: user._id})
         }else { 
+          
           res.status(400).json({message: 'password is incorrect'})
         }
        
