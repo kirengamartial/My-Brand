@@ -19,7 +19,7 @@ hamburgerrr.addEventListener("click", () => {
     hamburgerrr.classList.toggle("active");
     navMenuuu.classList.toggle("active");
 });
-const BlogId = window.location.pathname.split('/').pop();
+const BlogId = window.location.href.split("=").pop();
 fetch(`https://my-brand-aqrf.onrender.com/api/blog/${BlogId}`, { credentials: 'include' })
     .then(res => res.json())
     .then(data => {
@@ -105,7 +105,7 @@ const updateUserUIII = (user) => {
                 ${user.username}
             </a>
             <ul class="dropdown-content">
-                <li><a href="/profile/${user._id}">profile</a></li>
+                <li><a href="editProfile.html?=${user._id}">profile</a></li>
                 <li ><a id="logout" href="#">Logout</a></li>
             </ul>
         `;

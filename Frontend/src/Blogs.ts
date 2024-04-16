@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
       datas.forEach((data: any) => {
         blogDiv.innerHTML += `
           
-        <a href="/blogss/${data._id}" class="Blog__content">
+        <a href="ContentBlog1.html?=${data._id}" class="Blog__content">
                     <div class="image-container">
                         <img src="${data.photo.secure_url}" alt="">
                     </div>

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
             hamburger.classList.toggle("active");
             navMenu.classList.toggle("active");
         });
-        const id = window.location.pathname.split('/').pop();
+        const id = window.location.href.split("=").pop();
         Form.addEventListener('submit', function (e) {
             return __awaiter(this, void 0, void 0, function* () {
                 e.preventDefault();
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     const data = yield response.json();
                     if (data.msg) {
-                        location.assign('/');
+                        window.location.href = 'index.html';
                     }
                 }
                 catch (error) {
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             ${user.username}
                         </a>
                         <ul class="dropdown-content">
-                            <li><a href="/profile/${user._id}">profile</a></li>
+                            <li><a href="editProfile.html?=${user._id}">profile</a></li>
                             <li><a id="logout" href="#">Logout</a></li>
                         </ul>
                     `;
