@@ -106,8 +106,8 @@ export const createUser = async (req, res) => {
         const user = new User({ username, email, password: hashpassword });
         await user.save();
         const token = cookieToken(user._id);
-        res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, path: '/My-Brand/Frontend/' });
-        res.status(200).json({ user: user._id });
+        // res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000,  path: '/My-Brand/Frontend/'});
+        res.status(200).json({ user: user._id, token });
     }
     catch (error) {
         const duplicateEmailErrorMessage = handleDuplicateEmailError(error);
@@ -131,7 +131,6 @@ export const gellAllusers = async (req, res) => {
 };
 export const getUser = (req, res) => {
     const user = res.locals.user;
-    console.log(user);
     if (user) {
         res.status(200).json(user);
     }
@@ -221,7 +220,7 @@ export const loginUser = async (req, res) => {
             const auth = await bcrypt.compare(password, user.password);
             if (auth) {
                 const token = cookieToken(user._id);
-                res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000, path: '/' });
+                //  res.cookie('jwt', token, {maxAge: 3 * 24 * 60 * 60 * 1000, path: '/' })
                 res.status(200).json({ user: user._id, token: token });
             }
             else {
@@ -255,8 +254,10 @@ export const loginUser = async (req, res) => {
  *                   type: boolean
  *                   description: Indicates whether the logout was successful.
  */
-export const logoutUser = (req, res) => {
-    res.cookie('jwt', '', { maxAge: 1 });
-    res.status(200).json({ success: true });
-};
+// export const logoutUser =  (req: Request, res: Response) => {
+//   console.log('this Token',req.headers.authorization?.split(' ')[1])
+//   console.log(req.cookies.jwt)
+//   res.cookie('jwt', '', { maxAge: 1})
+//   res.status(200).json({ success: true });
+// }
 //# sourceMappingURL=Users.js.map

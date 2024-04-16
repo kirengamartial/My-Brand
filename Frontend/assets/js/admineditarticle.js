@@ -81,24 +81,28 @@ document.addEventListener('DOMContentLoaded', () => {
             Admin.innerHTML = '';
         }
     };
-    fetch('https://my-brand-aqrf.onrender.com/api/user', { credentials: 'include' })
-        .then(response => response.json())
-        .then(user => updateUserUI(user))
-        .catch(error => console.error('Error fetching user data:', error));
     document.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, function* () {
         if (e.target instanceof HTMLElement && e.target.id === 'logout') {
             e.preventDefault();
-            try {
-                yield fetch('https://my-brand-aqrf.onrender.com/logout', {
-                    method: 'POST',
-                    credentials: 'include'
-                });
-                updateUserUI(null);
+            updateUserUI(null);
+            document.cookie = `jwt=; max-age=0`;
+            setTimeout(() => {
                 window.location.href = 'register.html';
-            }
-            catch (error) {
-                console.error('Error logging out:', error);
-            }
+            }, 0);
         }
     }));
+    const cookie = document.cookie.split('jwt=')[1];
+    fetch('https://my-brand-aqrf.onrender.com/api/user', {
+        credentials: 'include',
+        headers: {
+            "Authorization": `Bearer ${cookie}`
+        }
+    })
+        .then(response => response.json())
+        .then(user => {
+        if (user) {
+            updateUserUI(user);
+        }
+    })
+        .catch(error => console.error('Error fetching user data:', error));
 });

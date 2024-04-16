@@ -51,22 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', async (e) => {
             if (e.target instanceof HTMLElement && e.target.id === 'logout') {
                 e.preventDefault();
-                try {
-                    await fetch('https://my-brand-aqrf.onrender.com/logout', {
-                        method: 'POST', 
-                        credentials: 'include' 
-                    });
-                    updateUserUI(null); 
-                    document.cookie = `jwt='' max-age=1`
-                    
-                } catch (error) {
-                    console.error('Error logging out:', error);
-                }
+                updateUserUI(null); 
+                document.cookie = `jwt=; max-age=0`;
+                setTimeout(() => {
+                    window.location.href = 'register.html';
+                }, 0); 
             }
         });
-
+        
         const cookie = document.cookie.split('jwt=')[1]
-        console.log(cookie)
         fetch('https://my-brand-aqrf.onrender.com/api/user', { 
             credentials: 'include',
             headers: {

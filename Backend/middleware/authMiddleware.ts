@@ -32,11 +32,9 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
 
 export const checkUser = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
-    console.log(token)
     if(token) {
       jwt.verify(token, process.env.JWT_SECRET!, async(err: jwt.VerifyErrors | null, decodedinfo: any) => {
      if(err) {
-        console.log(err)
         res.locals.user = null
         next()
      } else {
@@ -44,7 +42,7 @@ export const checkUser = (req: Request, res: Response, next: NextFunction) => {
         res.locals.user = user
         next()
      }
-     
+
       })
     }else {
         res.locals.user = null

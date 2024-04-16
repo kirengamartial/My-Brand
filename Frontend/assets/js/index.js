@@ -58,14 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, function* () {
             if (e.target instanceof HTMLElement && e.target.id === 'logout') {
                 e.preventDefault();
-                document.cookie = '';
+                updateUserUI(null);
+                document.cookie = `jwt=; max-age=0`;
                 setTimeout(() => {
                     window.location.href = 'register.html';
-                }, 1000);
+                }, 0);
             }
         }));
         const cookie = document.cookie.split('jwt=')[1];
-        console.log(cookie);
         fetch('https://my-brand-aqrf.onrender.com/api/user', {
             credentials: 'include',
             headers: {

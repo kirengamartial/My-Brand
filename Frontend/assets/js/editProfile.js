@@ -105,7 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }));
-        fetch('https://my-brand-aqrf.onrender.com/api/user', { credentials: 'include' })
+        const cookie = document.cookie.split('jwt=')[1];
+        fetch('https://my-brand-aqrf.onrender.com/api/user', {
+            credentials: 'include',
+            headers: {
+                "Authorization": `Bearer ${cookie}`
+            }
+        })
             .then(response => response.json())
             .then(user => {
             updateUserUI(user);

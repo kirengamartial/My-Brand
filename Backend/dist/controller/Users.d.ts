@@ -64,4 +64,3 @@ export declare const loginUser: (req: Request, res: Response) => Promise<void>;
  *                   type: boolean
  *                   description: Indicates whether the logout was successful.
  */
-export declare const logoutUser: (req: Request, res: Response) => void;

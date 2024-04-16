@@ -97,21 +97,27 @@ const updateUserUII  = (user: any) => {
 document.addEventListener('click', async (e) => {
     if (e.target instanceof HTMLElement && e.target.id === 'logout') {
         e.preventDefault();
-        try {
-            await fetch('https://my-brand-aqrf.onrender.com/logout', {
-                method: 'POST', 
-                credentials: 'include' 
-            });
-            updateUserUII (null); 
-            window.location.href = 'register.html'
-        } catch (error) {
-            console.error('Error logging out:', error);
-        }
+        updateUserUII(null); 
+        document.cookie = `jwt=; max-age=0`;
+        setTimeout(() => {
+            window.location.href = 'register.html';
+        }, 0); 
     }
 });
 
-fetch('https://my-brand-aqrf.onrender.com/api/user', { credentials: 'include' })
+const cookiee = document.cookie.split('jwt=')[1]
+fetch('https://my-brand-aqrf.onrender.com/api/user', { 
+    credentials: 'include',
+    headers: {
+        "Authorization": `Bearer ${cookiee}`
+    }
+ })
 .then(response => response.json())
-.then(user => updateUserUII (user))
+.then(user =>  {
+    if(user) {
+        updateUserUII(user);
+    }
+
+})
 .catch(error => console.error('Error fetching user data:', error));
 

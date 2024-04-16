@@ -66,6 +66,8 @@ if (Form) {
                    
                 }
                 if(data.user) {
+                    const { token } = data
+                    document.cookie= `jwt=${token}; path='/'; max-age= 3 * 24 * 60 * 60 * 1000` 
                     location.assign('index.html');
                 }
                 
