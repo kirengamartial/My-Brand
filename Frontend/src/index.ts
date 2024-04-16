@@ -51,10 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', async (e) => {
             if (e.target instanceof HTMLElement && e.target.id === 'logout') {
                 e.preventDefault();
-                document.cookie = `jwt=''; max-age=1;; path=/;`
-                window.location.href = 'register.html'
+                document.cookie = `jwt=''; max-age=1; path=/;`;
+                setTimeout(() => {
+                    window.location.href = 'register.html';
+                }, 1000); // Redirect after 1 second
             }
         });
+        
 
         const cookie = document.cookie.split('jwt=')[1]
         console.log(cookie)
