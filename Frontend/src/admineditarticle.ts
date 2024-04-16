@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const Admin = document.querySelector('.admin') as HTMLElement;
 
     // Extract the id from the URL path
-    const id = window.location.pathname.split('/').pop();
+    const id = window.location.pathname.split('=')[1];
 
     // Fetch blog data by ID
     fetch(`https://my-brand-aqrf.onrender.com/api/blog/${id}`)

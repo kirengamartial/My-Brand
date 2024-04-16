@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <p>${article.title}</p>
                 <div>
-                    <a href="/blogs/${article._id}" ">
+                    <a href="admineditarticle.html?=${article._id}" ">
                         <img class="article__icon" src="assets/img/Rectangle 57.png" alt="">
                     </a>
                     <a href="#" class="article__delete" data-article-id="${article._id}">
