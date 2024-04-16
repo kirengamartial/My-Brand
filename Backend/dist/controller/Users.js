@@ -142,7 +142,7 @@ export const getUser = (req, res) => {
 export const editUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { username, email, password } = req.body; // Remove 'password' from here
+        const { username, email, password } = req.body;
         const user = await User.findById(id);
         if (!user) {
             return res.status(400).json('There is no user');

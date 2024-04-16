@@ -118,7 +118,7 @@ const userSchema = Joi.object({
         const user = new User({ username, email, password: hashpassword });
         await user.save();
         const token =  cookieToken(user._id);
-        
+
         res.cookie('jwt', token, { maxAge: 3 * 24 * 60 * 60 * 1000,  path: '/My-Brand/Frontend/'});
         res.status(200).json({ user: user._id });
 
@@ -159,7 +159,7 @@ export const getUser = (req: Request, res: Response) => {
   export const editUser = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
-        const { username, email, password } = req.body; // Remove 'password' from here
+        const { username, email, password } = req.body; 
         const user = await User.findById(id);
   
         if (!user) {
