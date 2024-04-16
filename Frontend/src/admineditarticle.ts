@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const Admin = document.querySelector('.admin') as HTMLElement;
 
     // Extract the id from the URL path
-    const id = window.location.pathname.split('=')[1];
+    const id = window.location.pathname;
     console.log(id)
 
     // Fetch blog data by ID
