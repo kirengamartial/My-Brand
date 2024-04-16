@@ -14,9 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(`https://my-brand-aqrf.onrender.com/api/blog/${id}`)
         .then(response => response.json())
         .then(blog => {
-            // Populate form fields with blog data
-            console.log(id);
-            console.log(blog);
             titleInput.value = blog.title;
             descriptionInput.value = blog.description;
             articleIdInput.value = blog.id;
@@ -38,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(updatedBlog => {
             console.log('Blog updated:', updatedBlog);
-            window.location.href = 'adminarticle.html'
+            // window.location.href = 'adminarticle.html'
         })
         .catch(error => console.error('Error updating blog:', error));
     });
