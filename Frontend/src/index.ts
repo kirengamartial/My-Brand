@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', async (e) => {
             if (e.target instanceof HTMLElement && e.target.id === 'logout') {
                 e.preventDefault();
-                document.cookie = `jwt=''; max-age=1; path=/;`;
+                document.cookie = '';
                 setTimeout(() => {
                     window.location.href = 'register.html';
-                }, 1000); // Redirect after 1 second
+                }, 1000); 
             }
         });
         
