@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         credentials: 'include'
                     });
                     updateUserUI(null);
+                    document.cookie = `jwt=''; maxAge= 3 * 24 * 60 * 60 * 1000; path=/;`;
                     window.location.href = 'register.html';
                 }
                 catch (error) {
@@ -71,9 +72,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }));
-        fetch('http://localhost:3000/api/user', { credentials: 'include' })
+        const cookie = document.cookie.split('jwt=')[1];
+        console.log(cookie);
+        fetch('https://my-brand-aqrf.onrender.com/api/user', {
+            credentials: 'include',
+            headers: {
+                "Authorization": `Bearer ${cookie}`
+            }
+        })
             .then(response => response.json())
-            .then(user => updateUserUI(user))
+            .then(user => {
+            updateUserUI(user);
+        })
             .catch(error => console.error('Error fetching user data:', error));
     }
 });

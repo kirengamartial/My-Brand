@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.cookies.jwt;
+  const token = req.cookies.jwt
   if (!token) {
     return res.redirect("back");
   }
@@ -31,7 +31,8 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
 
 
 export const checkUser = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies.jwt
+  const token = req.headers.authorization?.split(' ')[1];
+    console.log(token)
     if(token) {
       jwt.verify(token, process.env.JWT_SECRET!, async(err: jwt.VerifyErrors | null, decodedinfo: any) => {
      if(err) {
