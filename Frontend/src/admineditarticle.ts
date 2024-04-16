@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(updatedBlog => {
             console.log('Blog updated:', updatedBlog);
-            location.assign('/article')
+            location.assign('adminarticle.html')
         })
         .catch(error => console.error('Error updating blog:', error));
     });

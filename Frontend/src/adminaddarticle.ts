@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             const data = await res.json()
             if(data.message) {
-               location.assign('/article')
+               location.assign('adminarticle.html')
             } else if(data.err) {
                 console.log(data.err)
             } else {
