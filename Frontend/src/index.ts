@@ -51,17 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', async (e) => {
             if (e.target instanceof HTMLElement && e.target.id === 'logout') {
                 e.preventDefault();
-                try {
-                    await fetch('https://my-brand-aqrf.onrender.com/logout', {
-                        method: 'POST', 
-                        credentials: 'include' 
-                    });
-                    updateUserUI(null); 
-                    document.cookie = `jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
-                    window.location.href = 'register.html'
-                } catch (error) {
-                    console.error('Error logging out:', error);
-                }
+                document.cookie = `jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+                window.location.href = 'register.html'
             }
         });
 
