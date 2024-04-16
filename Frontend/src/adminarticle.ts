@@ -92,14 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const deleteArticle = async (id: any) => {
         try {
-            const response = await fetch(`/blog/${id}`, {
+            const response = await fetch(`https://my-brand-aqrf.onrender.com/blog/${id}`, {
                 method: 'DELETE',
                 credentials: 'include'
             });
 
             if (response.ok) {
                 console.log(`Article with ID ${id} deleted successfully`);
-                fetch('/blog', { credentials: 'include' })
+                fetch('https://my-brand-aqrf.onrender.com/blog', { credentials: 'include' })
                     .then(res => res.json())
                     .then(data => displayArticle(data))
                     .catch(err => console.log(err));
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    fetch('/blog', { credentials: 'include' })
+    fetch('https://my-brand-aqrf.onrender.com/blog', { credentials: 'include' })
         .then(res => res.json())
         .then(data => displayArticle(data))
         .catch(err => console.log(err));

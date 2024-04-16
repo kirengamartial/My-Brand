@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     const cookie = document.cookie.split('jwt=')[1]
-    fetch('http://localhost:3000/api/user', { 
+    fetch('https://my-brand-aqrf.onrender.com/api/user', { 
         credentials: 'include',
         headers: {
             "Authorization": `Bearer ${cookie}`
