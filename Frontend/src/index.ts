@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                 Admin <i class="fas fa-chevron-down"></i>
                             </a>
                             <ul class="dropdown-content">
-                                <li><a href="/query">Query</a></li>
-                                <li><a href="/article">Article</a></li>
+                                <li><a href="adminquery">Query</a></li>
+                                <li><a href="adminarticle">Article</a></li>
                             </ul>
                         `;
                     } else {
