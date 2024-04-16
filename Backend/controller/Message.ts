@@ -7,7 +7,6 @@ import {Request, Response, NextFunction} from "express";
 
 // Message
 
-
 /**
  * @swagger
  * /contact:
