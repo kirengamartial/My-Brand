@@ -45,4 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(error);
         }
     }));
+    const cookieeee = document.cookie.split("=")[1];
+    if (cookieeee) {
+        window.location.href = "index.html";
+    }
 });

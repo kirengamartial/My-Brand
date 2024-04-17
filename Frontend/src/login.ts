@@ -41,4 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+const cookieeee = document.cookie.split("=")[1]
+if(cookieeee) {
+    window.location.href = "index.html"
+}
 });
