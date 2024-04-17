@@ -111,11 +111,9 @@ fetch('https://my-brand-aqrf.onrender.com/api/user', {
  })
 .then(response => response.json())
 .then(user =>  {
-    if (!user.isAdmin) {
-        window.location.assign("index.html");
-        console.log('worked')
-    } else {
-        updateUserUiInfo(user)
+    if(user) {
+        updateUserUiInfo(user);
     }
+
 })
 .catch(error => console.error('Error fetching user data:', error));
