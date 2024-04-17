@@ -109,10 +109,19 @@ fetch('https://my-brand-aqrf.onrender.com/api/user', {
     .then(response => response.json())
     .then(user => {
     if (!user.isAdmin) {
-        window.location.assign(document.referrer);
+        // If not admin, redirect back to the previous page
+        var previousPage = document.referrer;
+        if (previousPage && previousPage !== window.location.href) {
+            window.location.assign(previousPage);
+        }
+        else {
+            // If no valid previous page, redirect to a default page
+            window.location.assign("index.html"); // Change this to your default page
+        }
     }
     else {
-        updateUserUiInfo(user);
+        // If admin, redirect to adminquery.html
+        window.location.assign("adminquery.html");
     }
 })
     .catch(error => console.error('Error fetching user data:', error));
