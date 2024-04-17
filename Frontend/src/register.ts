@@ -81,21 +81,3 @@ if (Form) {
     });
 }
 
-
-const cookieeee = document.cookie.split('jwt=')[1]
-fetch('https://my-brand-aqrf.onrender.com/api/user', { 
-    credentials: 'include',
-    headers: {
-        "Authorization": `Bearer ${cookieeee}`
-    }
- })
-.then(response => response.json())
-.then(user =>  {
-    if(user) {
-        window.location.href = "index.html"
-    }else {
-        window.location.href = "register.html"
-    }
-
-})
-.catch(error => console.error('Error fetching user data:', error));
