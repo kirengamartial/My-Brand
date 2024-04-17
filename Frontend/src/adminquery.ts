@@ -113,6 +113,7 @@ fetch('https://my-brand-aqrf.onrender.com/api/user', {
 .then(user =>  {
     if (!user.isAdmin) {
         window.location.assign("index.html");
+        console.log('worked')
     } else {
         updateUserUiInfo(user)
     }
