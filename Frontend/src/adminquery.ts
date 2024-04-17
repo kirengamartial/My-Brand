@@ -111,11 +111,12 @@ fetch('https://my-brand-aqrf.onrender.com/api/user', {
  })
 .then(response => response.json())
 .then(user =>  {
+    console.log(user.isAdmin)
     if(!user.isAdmin) {
         window.location.href = "index.html"
     }else {
         updateUserUiInfo(user);
-        
+
     }
 
 })
