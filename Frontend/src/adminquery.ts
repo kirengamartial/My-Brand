@@ -102,6 +102,7 @@ document.addEventListener('click', async (e) => {
     }
 });
 
+
 const cookieee = document.cookie.split('jwt=')[1]
 fetch('https://my-brand-aqrf.onrender.com/api/user', { 
     credentials: 'include',
