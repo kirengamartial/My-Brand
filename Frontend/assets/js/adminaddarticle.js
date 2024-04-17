@@ -98,7 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })
         .then(response => response.json())
         .then(user => {
-        if (user) {
+        if (!user.isAdmin) {
+            window.location.href = "index.html";
+        }
+        else {
             updateUserUI(user);
         }
     })
