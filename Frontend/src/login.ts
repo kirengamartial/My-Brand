@@ -1,15 +1,14 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const hamburger = document.querySelector(".hamburger") as HTMLElement;
-    const navMenu = document.querySelector(".nav__list") as HTMLElement;
-    const Form = document.getElementById('login__form') as HTMLFormElement;
+    const hamburgerrrr = document.querySelector(".hamburger") as HTMLElement;
+    const navMenuuuu = document.querySelector(".nav__list") as HTMLElement;
+    const  Formm = document.getElementById('login__form') as HTMLFormElement;
     const Errors = document.querySelector(".error") as HTMLElement;
 
-    hamburger.addEventListener("click", () => {
-        hamburger.classList.toggle("active");
-        navMenu.classList.toggle("active");
+    hamburgerrrr.addEventListener("click", () => {
+        hamburgerrrr.classList.toggle("active");
+        navMenuuuu.classList.toggle("active");
     });
 
-    Form.addEventListener('submit', async(e) => {
+     Formm .addEventListener('submit', async(e) => {
         e.preventDefault();
 
         const useremail = (document.getElementById('user_email') as HTMLInputElement).value;
@@ -41,9 +40,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-const cookieeee = document.cookie.split("=")[1]
-console.log(cookieeee)
-if(cookieeee) {
+const cookieeeee = document.cookie.split("=")[1]
+console.log(cookieeeee)
+if(cookieeeee) {
     window.location.href = "index.html"
 }
-});
+

@@ -8,46 +8,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-document.addEventListener('DOMContentLoaded', () => {
-    const hamburger = document.querySelector(".hamburger");
-    const navMenu = document.querySelector(".nav__list");
-    const Form = document.getElementById('login__form');
-    const Errors = document.querySelector(".error");
-    hamburger.addEventListener("click", () => {
-        hamburger.classList.toggle("active");
-        navMenu.classList.toggle("active");
-    });
-    Form.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, function* () {
-        e.preventDefault();
-        const useremail = document.getElementById('user_email').value;
-        const password = document.getElementById('password').value;
-        try {
-            const res = yield fetch('https://my-brand-aqrf.onrender.com/login', {
-                method: 'POST',
-                body: JSON.stringify({
-                    email: useremail,
-                    password
-                }),
-                headers: { "Content-type": "application/json" },
-                credentials: "include"
-            });
-            const data = yield res.json();
-            if (data.user) {
-                const { token } = data;
-                document.cookie = `jwt=${token}; path='/'; max-age= 3 * 24 * 60 * 60 * 1000`;
-                window.location.href = 'index.html';
-            }
-            if (data.message) {
-                Errors.innerHTML = data.message;
-            }
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }));
-    const cookieeee = document.cookie.split("=")[1];
-    console.log(cookieeee);
-    if (cookieeee) {
-        window.location.href = "index.html";
-    }
+const hamburgerrrr = document.querySelector(".hamburger");
+const navMenuuuu = document.querySelector(".nav__list");
+const Formm = document.getElementById('login__form');
+const Errors = document.querySelector(".error");
+hamburgerrrr.addEventListener("click", () => {
+    hamburgerrrr.classList.toggle("active");
+    navMenuuuu.classList.toggle("active");
 });
+Formm.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, function* () {
+    e.preventDefault();
+    const useremail = document.getElementById('user_email').value;
+    const password = document.getElementById('password').value;
+    try {
+        const res = yield fetch('https://my-brand-aqrf.onrender.com/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                email: useremail,
+                password
+            }),
+            headers: { "Content-type": "application/json" },
+            credentials: "include"
+        });
+        const data = yield res.json();
+        if (data.user) {
+            const { token } = data;
+            document.cookie = `jwt=${token}; path='/'; max-age= 3 * 24 * 60 * 60 * 1000`;
+            window.location.href = 'index.html';
+        }
+        if (data.message) {
+            Errors.innerHTML = data.message;
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+}));
+const cookieeeee = document.cookie.split("=")[1];
+console.log(cookieeeee);
+if (cookieeeee) {
+    window.location.href = "index.html";
+}
