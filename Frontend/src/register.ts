@@ -93,6 +93,8 @@ fetch('https://my-brand-aqrf.onrender.com/api/user', {
 .then(user =>  {
     if(user) {
         window.location.href = "index.html"
+    }else {
+        window.location.href = "register.html"
     }
 
 })

@@ -53,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(user =>  {
         if(user) {
             window.location.href = "index.html"
+        }else {
+            window.location.href = "login.html"
         }
 
     })

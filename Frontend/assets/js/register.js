@@ -90,5 +90,8 @@ fetch('https://my-brand-aqrf.onrender.com/api/user', {
     if (user) {
         window.location.href = "index.html";
     }
+    else {
+        window.location.href = "register.html";
+    }
 })
     .catch(error => console.error('Error fetching user data:', error));
