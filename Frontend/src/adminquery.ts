@@ -115,6 +115,7 @@ fetch('https://my-brand-aqrf.onrender.com/api/user', {
         window.location.href = "index.html"
     }else {
         updateUserUiInfo(user);
+        
     }
 
 })
