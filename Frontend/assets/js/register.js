@@ -53,7 +53,7 @@ if (Form) {
             });
             const data = yield res.json();
             console.log(data);
-            if (data.error) {
+            if (data.error && data.error !== undefined) {
                 if (data.error && ErrorsPassword) {
                     ErrorsPassword.innerHTML = data.error.password;
                 }
