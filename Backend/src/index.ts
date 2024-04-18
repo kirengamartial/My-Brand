@@ -94,6 +94,7 @@ app.use('/api-docs',
  swaggerUi.setup(spacs)
 )
 
+
 // Serve static files
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const staticPath = path.resolve(__dirname, '../../../Frontend/assets');
