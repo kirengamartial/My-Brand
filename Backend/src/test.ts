@@ -2,7 +2,6 @@ import { describe, it, before } from 'mocha';
 import app from './index.js';
 import request from 'supertest';
 import { expect } from 'chai';
-import sinon from 'sinon'
 
 
 before(function(done) {
