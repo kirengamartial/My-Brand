@@ -1,8 +1,0 @@
-services:
-  - name: MY_brand
-    type: web
-    runtime: node
-    repo: https://github.com/kirengamartial/My-Brand
-    branch: main
-    buildCommand: npm install && npm run build
-    startCommand: npm run start
