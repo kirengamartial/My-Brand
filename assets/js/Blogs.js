@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Admin.innerHTML = '';
         }
     };
-    fetch('https://my-brand-aqrf.onrender.com/blog', { credentials: 'include' })
+    fetch('https://my-brand-backend-h88y.onrender.com/blog', { credentials: 'include' })
         .then(res => res.json())
         .then(datas => {
         datas.forEach((data) => {
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }));
     const cookie = document.cookie.split('jwt=')[1];
-    fetch('https://my-brand-aqrf.onrender.com/api/user', {
+    fetch('https://my-brand-backend-h88y.onrender.com/api/user', {
         credentials: 'include',
         headers: {
             "Authorization": `Bearer ${cookie}`

@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const id = window.location.href.split("=")[1];
     console.log(id);
     // Fetch blog data by ID
-    fetch(`https://my-brand-aqrf.onrender.com/api/blog/${id}`)
+    fetch(`https://my-brand-backend-h88y.onrender.com/api/blog/${id}`)
         .then(response => response.json())
         .then(blog => {
         titleInput.value = blog.title;
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const formData = new FormData(this);
         // Send PUT request to update blog
-        fetch(`https://my-brand-aqrf.onrender.com/blog/${id}`, {
+        fetch(`https://my-brand-backend-h88y.onrender.com/blog/${id}`, {
             method: 'PUT',
             body: formData,
             credentials: 'include'
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }));
     const cookie = document.cookie.split('jwt=')[1];
-    fetch('https://my-brand-aqrf.onrender.com/api/user', {
+    fetch('https://my-brand-backend-h88y.onrender.com/api/user', {
         credentials: 'include',
         headers: {
             "Authorization": `Bearer ${cookie}`

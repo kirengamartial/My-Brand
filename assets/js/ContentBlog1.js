@@ -21,7 +21,7 @@ hamburgerrr.addEventListener("click", () => {
 });
 const BlogId = window.location.href.split("=").pop();
 console.log(BlogId);
-fetch(`https://my-brand-aqrf.onrender.com/api/blog/${BlogId}`, { credentials: 'include' })
+fetch(`https://my-brand-backend-h88y.onrender.com/api/blog/${BlogId}`, { credentials: 'include' })
     .then(res => res.json())
     .then(data => {
     blogDiv.innerHTML = `
@@ -33,7 +33,7 @@ fetch(`https://my-brand-aqrf.onrender.com/api/blog/${BlogId}`, { credentials: 'i
 </div>
 `;
 });
-fetch('https://my-brand-aqrf.onrender.com/comment', { credentials: 'include' })
+fetch('https://my-brand-backend-h88y.onrender.com/comment', { credentials: 'include' })
     .then(res => res.json())
     .then(datas => {
     datas.forEach((data) => {
@@ -95,7 +95,7 @@ document.addEventListener('click', (e) => __awaiter(void 0, void 0, void 0, func
     }
 }));
 const cookie = document.cookie.split('jwt=')[1];
-fetch('https://my-brand-aqrf.onrender.com/api/user', {
+fetch('https://my-brand-backend-h88y.onrender.com/api/user', {
     credentials: 'include',
     headers: {
         "Authorization": `Bearer ${cookie}`
@@ -111,7 +111,7 @@ fetch('https://my-brand-aqrf.onrender.com/api/user', {
             const comment = commentInput.value;
             try {
                 if (user && user.username) {
-                    const res = yield fetch('https://my-brand-aqrf.onrender.com/comment', {
+                    const res = yield fetch('https://my-brand-backend-h88y.onrender.com/comment', {
                         method: 'POST',
                         body: JSON.stringify({
                             blog_id: BlogId,

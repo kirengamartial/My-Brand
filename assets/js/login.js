@@ -21,7 +21,7 @@ Formm.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, functi
     const useremail = document.getElementById('user_email').value;
     const password = document.getElementById('password').value;
     try {
-        const res = yield fetch('https://my-brand-aqrf.onrender.com/login', {
+        const res = yield fetch('https://my-brand-backend-h88y.onrender.com/login', {
             method: 'POST',
             body: JSON.stringify({
                 email: useremail,

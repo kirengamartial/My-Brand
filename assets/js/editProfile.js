@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     formData.password = Password;
                 }
                 try {
-                    const response = yield fetch(`https://my-brand-aqrf.onrender.com/api/user/${id}`, {
+                    const response = yield fetch(`https://my-brand-backend-h88y.onrender.com/api/user/${id}`, {
                         method: 'PUT',
                         body: JSON.stringify(formData),
                         headers: { 'Content-Type': 'application/json' },
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target instanceof HTMLElement && e.target.id === 'logout') {
                 e.preventDefault();
                 try {
-                    yield fetch('https://my-brand-aqrf.onrender.com/logout', {
+                    yield fetch('https://my-brand-backend-h88y.onrender.com/logout', {
                         method: 'POST',
                         credentials: 'include'
                     });
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }));
         const cookie = document.cookie.split('jwt=')[1];
-        fetch('https://my-brand-aqrf.onrender.com/api/user', {
+        fetch('https://my-brand-backend-h88y.onrender.com/api/user', {
             credentials: 'include',
             headers: {
                 "Authorization": `Bearer ${cookie}`

@@ -95,13 +95,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const deleteArticle = (id) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const response = yield fetch(`https://my-brand-aqrf.onrender.com/blog/${id}`, {
+            const response = yield fetch(`https://my-brand-backend-h88y.onrender.com/blog/${id}`, {
                 method: 'DELETE',
                 credentials: 'include'
             });
             if (response.ok) {
                 console.log(`Article with ID ${id} deleted successfully`);
-                fetch('https://my-brand-aqrf.onrender.com/blog', { credentials: 'include' })
+                fetch('https://my-brand-backend-h88y.onrender.com/blog', { credentials: 'include' })
                     .then(res => res.json())
                     .then(data => displayArticle(data))
                     .catch(err => console.log(err));
@@ -114,12 +114,12 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error deleting article:', error);
         }
     });
-    fetch('https://my-brand-aqrf.onrender.com/blog', { credentials: 'include' })
+    fetch('https://my-brand-backend-h88y.onrender.com/blog', { credentials: 'include' })
         .then(res => res.json())
         .then(data => displayArticle(data))
         .catch(err => console.log(err));
     const cookie = document.cookie.split('jwt=')[1];
-    fetch('https://my-brand-aqrf.onrender.com/api/user', {
+    fetch('https://my-brand-backend-h88y.onrender.com/api/user', {
         credentials: 'include',
         headers: {
             "Authorization": `Bearer ${cookie}`
