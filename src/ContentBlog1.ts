@@ -142,6 +142,7 @@ fetch('https://my-brand-backend-h88y.onrender.com/api/user', {
                    </div>
                    `
                 }
+                
             } catch (error) {
                 console.error('Error submitting comment:', error);
             }
