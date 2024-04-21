@@ -42,6 +42,7 @@ form.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, functio
                 ErrorsContact.innerHTML = data.error;
             }
         }
+        console.log(data.message);
         if (data.message) {
             popupp.innerHTML = `
         <div class="popup-container">
