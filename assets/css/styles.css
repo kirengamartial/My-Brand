@@ -511,6 +511,43 @@ transform: rotate(-180deg);
 }
 
 
+ .popup-container {
+  position: fixed;
+  top: 5%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 9999; 
+}
+
+.popup {
+  /* display: none; */
+  position: relative;
+  padding: 10px 20px;
+  background-color: #f44336; 
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.5s forwards, slideOut 0.5s forwards 3s; 
+}
+
+
+@keyframes slideIn {
+  from {
+    right: -200px; 
+  }
+  to {
+    right: 20px;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    right: 20px; /* Start position */
+  }
+  to {
+    right: -200px; /* End position */
+  }
+}
 
 /*==================== SERVICES ====================*/
 

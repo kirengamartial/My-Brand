@@ -15,6 +15,7 @@ const loginDivvv = document.querySelector('.nav__login');
 const Adminnn = document.querySelector('.admin');
 const blogDiv = document.querySelector('.blogii_container');
 const commentDiv = document.querySelector('.holderr');
+const popup = document.querySelector('.triall');
 hamburgerrr.addEventListener("click", () => {
     hamburgerrr.classList.toggle("active");
     navMenuuu.classList.toggle("active");
@@ -132,7 +133,12 @@ fetch('https://my-brand-backend-h88y.onrender.com/api/user', {
                     }
                 }
                 else {
-                    alert("Please log in to submit a comment.");
+                    popup.innerHTML = `
+                   <div class="popup-container">
+                   <div id="popup success" class="popup">
+                     Error Message
+                   </div>
+                   `;
                 }
             }
             catch (error) {

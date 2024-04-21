@@ -5,6 +5,7 @@ const loginDivvv = document.querySelector('.nav__login') as HTMLElement;
 const Adminnn = document.querySelector('.admin') as HTMLElement;
 const blogDiv = document.querySelector('.blogii_container') as HTMLElement
 const commentDiv = document.querySelector('.holderr') as HTMLElement
+const popup = document.querySelector('.triall') as HTMLElement
 
 hamburgerrr.addEventListener("click", () => {
     hamburgerrr.classList.toggle("active");
@@ -134,7 +135,12 @@ fetch('https://my-brand-backend-h88y.onrender.com/api/user', {
                         `;
                     }
                 } else {
-                    alert("Please log in to submit a comment.");
+                   popup.innerHTML = `
+                   <div class="popup-container">
+                   <div id="popup success" class="popup">
+                     Error Message
+                   </div>
+                   `
                 }
             } catch (error) {
                 console.error('Error submitting comment:', error);
