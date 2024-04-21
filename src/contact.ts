@@ -4,6 +4,7 @@ const hamburgerr: HTMLElement | null = document.querySelector(".hamburger");
 const loginDiv = document.querySelector('.nav__login') as HTMLElement;
 const Adminy: HTMLElement | null = document.querySelector('.admin');
 const ErrorsContact: Element | null = document.querySelector(".contact-error");
+const popupp = document.querySelector('.triall') as HTMLElement
 
 hamburgerr?.addEventListener("click", () => {
     hamburgerr.classList.toggle("active");
@@ -41,7 +42,12 @@ try {
         }
     }
     if(data.message) {
-     alert(data.message)
+        popupp.innerHTML = `
+        <div class="popup-container">
+        <div id="popupp" class="popup">
+         ${data.message}
+        </div>
+        `
     }
 } catch (error) {
     console.log(error)

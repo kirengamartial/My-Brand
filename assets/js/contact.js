@@ -14,6 +14,7 @@ const hamburgerr = document.querySelector(".hamburger");
 const loginDiv = document.querySelector('.nav__login');
 const Adminy = document.querySelector('.admin');
 const ErrorsContact = document.querySelector(".contact-error");
+const popupp = document.querySelector('.triall');
 hamburgerr === null || hamburgerr === void 0 ? void 0 : hamburgerr.addEventListener("click", () => {
     hamburgerr.classList.toggle("active");
     navMenuu.classList.toggle("active");
@@ -42,7 +43,12 @@ form.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, functio
             }
         }
         if (data.message) {
-            alert(data.message);
+            popupp.innerHTML = `
+        <div class="popup-container">
+        <div id="popupp" class="popup">
+         ${data.message}
+        </div>
+        `;
         }
     }
     catch (error) {
