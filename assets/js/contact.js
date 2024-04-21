@@ -46,7 +46,7 @@ form.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, functio
         if (data.message) {
             popupp.innerHTML = `
         <div class="popup-container">
-        <div id="popupp" class="popup">
+        <div id="popup" class="popupp">
          ${data.message}
         </div>
         `;

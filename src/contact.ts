@@ -45,11 +45,12 @@ try {
     if(data.message) {
         popupp.innerHTML = `
         <div class="popup-container">
-        <div id="popupp" class="popup">
+        <div id="popup" class="popupp">
          ${data.message}
         </div>
         `
     }
+    
 } catch (error) {
     console.log(error)
 }
