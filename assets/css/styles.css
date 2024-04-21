@@ -553,7 +553,7 @@ transform: rotate(-180deg);
     right: 20px; /* Start position */
   }
   to {
-    right: -200px; /* End position */
+    right: -400px; /* End position */
   }
 }
 
