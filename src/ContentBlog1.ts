@@ -135,7 +135,6 @@ fetch('https://my-brand-backend-h88y.onrender.com/api/user', {
                         `;
                     }
                 } else {
-                    
                    popup.innerHTML = `
                    <div class="popup-container">
                    <div id="popup success" class="popup">
