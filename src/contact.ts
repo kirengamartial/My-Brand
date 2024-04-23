@@ -62,14 +62,20 @@ try {
             To : `martialkirenga22@gmail.com`,
             From : `martialkirenga22@gmail.com`,
             Subject : "Portfolio Contact Message",
-            Body : `${message.question} -
-             ${message.description}
+            Body : `
+            <b>Name: </b>${message.name}
+            <br>
+            <b>Email: </b>${message.email}
+            <br>
+            <b>Question: </b>${message.question} -
+            <br>
+            <b>Description: </b>${message.description}
             `
         }).then((res: any) => {
             popupp.innerHTML = `
             <div class="popup-container">
             <div id="popup" class="popupp">
-              Sent Successfully
+             Message Sent Successfully
             </div>
             `}
         )
