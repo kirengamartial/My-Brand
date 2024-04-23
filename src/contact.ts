@@ -6,7 +6,6 @@ const Adminy: HTMLElement | null = document.querySelector('.admin');
 const ErrorsContact: Element | null = document.querySelector(".contact-error");
 const popupp = document.querySelector('.triall') as HTMLElement
 
-
 hamburgerr?.addEventListener("click", () => {
     hamburgerr.classList.toggle("active");
     navMenuu.classList.toggle("active");
@@ -42,54 +41,14 @@ try {
             ErrorsContact.innerHTML = data.error;
         }
     }
-
-    interface ContactMessage {
-        name: string;
-        email: string;
-        question: string;
-        description: string;
-        _id: string;
-    }
-    
-    if (typeof data.message === 'string') {
-        console.error('Received unexpected data format:', data.message);
-    } else if (typeof data.message === 'object' && data.message !== null) {
-        const message = data.message as ContactMessage;
-         // @ts-ignore
-        Email.send({
-            Host : "smtp.elasticemail.com",
-            Username : "martialkirenga22@gmail.com",
-            Password : "766FDE5253FFABFF459C844A91B8A207C77A",
-            To : `martialkirenga22@gmail.com`,
-            From : `martialkirenga22@gmail.com`,
-            Subject : "Portfolio Contact Message",
-            Body : `
-            <b>Name: </b>${message.name}
-            <br>
-            <b>Email: </b>${message.email}
-            <br>
-            <b>Question: </b>${message.question} -
-            <br>
-            <b>Description: </b>${message.description}
-            `
-        }).then((res: any) => {
-            popupp.innerHTML = `
-            <div class="popup-container">
-            <div id="popup" class="popupp">
-             Message Sent Successfully
-            </div>
-            `}
-        )
-        .catch((err:any) => {
-            popupp.innerHTML = `
-            <div class="popup-container">
-            <div id="popup" class="popup">
-             ${err}
-            </div>
-            `
-        })
-    } else {
-        console.error('Received unexpected data format');
+    console.log(data.message)
+    if(data.message) {
+        popupp.innerHTML = `
+        <div class="popup-container">
+        <div id="popup" class="popupp">
+         Message sent succeffully
+        </div>
+        `
     }
     
 } catch (error) {
