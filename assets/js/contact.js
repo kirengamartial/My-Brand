@@ -42,33 +42,41 @@ form.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, functio
                 ErrorsContact.innerHTML = data.error;
             }
         }
-        console.log(data.message);
-        if (data.message) {
+        if (typeof data.message === 'string') {
+            console.error('Received unexpected data format:', data.message);
+        }
+        else if (typeof data.message === 'object' && data.message !== null) {
+            const message = data.message;
             // @ts-ignore
             Email.send({
                 Host: "smtp.elasticemail.com",
                 Username: "martialkirenga22@gmail.com",
                 Password: "766FDE5253FFABFF459C844A91B8A207C77A",
                 To: `martialkirenga22@gmail.com`,
-                From: `${data.message}`,
+                From: `${message.email}`,
                 Subject: "Portfolio Contact Message",
-                Body: `${data.message} -
-             ${data.message}
+                Body: `${message.question} -
+             ${message.description}
             `
-            }).then(popupp.innerHTML = `
+            }).then((res) => {
+                popupp.innerHTML = `
             <div class="popup-container">
             <div id="popup" class="popupp">
-             ${data.message}
+              Sent Successfully
             </div>
-            `)
+            `;
+            })
                 .catch((err) => {
                 popupp.innerHTML = `
             <div class="popup-container">
             <div id="popup" class="popup">
-             ${data.message}
+             ${err}
             </div>
             `;
             });
+        }
+        else {
+            console.error('Received unexpected data format');
         }
     }
     catch (error) {
