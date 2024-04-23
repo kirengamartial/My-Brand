@@ -60,7 +60,7 @@ try {
             Username : "martialkirenga22@gmail.com",
             Password : "766FDE5253FFABFF459C844A91B8A207C77A",
             To : `martialkirenga22@gmail.com`,
-            From : `${message.email}`,
+            From : `martialkirenga22@gmail.com`,
             Subject : "Portfolio Contact Message",
             Body : `${message.question} -
              ${message.description}
