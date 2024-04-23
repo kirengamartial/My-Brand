@@ -50,7 +50,6 @@ try {
         </div>
         `
     }
-    
 } catch (error) {
     console.log(error)
 }
