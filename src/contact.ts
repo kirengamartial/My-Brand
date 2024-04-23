@@ -41,7 +41,7 @@ try {
             ErrorsContact.innerHTML = data.error;
         }
     }
-    console.log(data.message)
+    console.log(data)
     if(data.message) {
         popupp.innerHTML = `
         <div class="popup-container">
