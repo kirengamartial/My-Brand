@@ -42,6 +42,7 @@ try {
             ErrorsContact.innerHTML = data.error;
         }
     }
+
     interface ContactMessage {
         name: string;
         email: string;
@@ -49,7 +50,7 @@ try {
         description: string;
         _id: string;
     }
-
+    
     if (typeof data.message === 'string') {
         console.error('Received unexpected data format:', data.message);
     } else if (typeof data.message === 'object' && data.message !== null) {
