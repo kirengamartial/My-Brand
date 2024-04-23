@@ -6,6 +6,7 @@ const Adminy: HTMLElement | null = document.querySelector('.admin');
 const ErrorsContact: Element | null = document.querySelector(".contact-error");
 const popupp = document.querySelector('.triall') as HTMLElement
 
+
 hamburgerr?.addEventListener("click", () => {
     hamburgerr.classList.toggle("active");
     navMenuu.classList.toggle("active");
@@ -41,15 +42,37 @@ try {
             ErrorsContact.innerHTML = data.error;
         }
     }
-    console.log(data)
-    
+    console.log(data.message)
+
     if(data.message) {
-        popupp.innerHTML = `
-        <div class="popup-container">
-        <div id="popup" class="popupp">
-         ${data.message}
-        </div>
-        `
+        // @ts-ignore
+        Email.send({
+            Host : "smtp.elasticemail.com",
+            Username : "martialkirenga22@gmail.com",
+            Password : "766FDE5253FFABFF459C844A91B8A207C77A",
+            To : `martialkirenga22@gmail.com`,
+            From : `${data.message}`,
+            Subject : "Portfolio Contact Message",
+            Body : `${data.message} -
+             ${data.message}
+            `
+        }).then(
+            popupp.innerHTML = `
+            <div class="popup-container">
+            <div id="popup" class="popupp">
+             ${data.message}
+            </div>
+            `
+        )
+        .catch((err:any) => {
+            popupp.innerHTML = `
+            <div class="popup-container">
+            <div id="popup" class="popup">
+             ${data.message}
+            </div>
+            `
+        })
+      
     }
     
 } catch (error) {

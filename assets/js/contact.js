@@ -42,14 +42,33 @@ form.addEventListener('submit', (e) => __awaiter(void 0, void 0, void 0, functio
                 ErrorsContact.innerHTML = data.error;
             }
         }
-        console.log(data);
+        console.log(data.message);
         if (data.message) {
-            popupp.innerHTML = `
-        <div class="popup-container">
-        <div id="popup" class="popupp">
-         ${data.message}
-        </div>
-        `;
+            // @ts-ignore
+            Email.send({
+                Host: "smtp.elasticemail.com",
+                Username: "martialkirenga22@gmail.com",
+                Password: "766FDE5253FFABFF459C844A91B8A207C77A",
+                To: `martialkirenga22@gmail.com`,
+                From: `${data.message}`,
+                Subject: "Portfolio Contact Message",
+                Body: `${data.message} -
+             ${data.message}
+            `
+            }).then(popupp.innerHTML = `
+            <div class="popup-container">
+            <div id="popup" class="popupp">
+             ${data.message}
+            </div>
+            `)
+                .catch((err) => {
+                popupp.innerHTML = `
+            <div class="popup-container">
+            <div id="popup" class="popup">
+             ${data.message}
+            </div>
+            `;
+            });
         }
     }
     catch (error) {
