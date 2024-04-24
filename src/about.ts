@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 0); 
         }
     });
-    
+
     const cookie = document.cookie.split('jwt=')[1]
     fetch('https://my-brand-backend-flax.vercel.app/api/user', { 
         credentials: 'include',
