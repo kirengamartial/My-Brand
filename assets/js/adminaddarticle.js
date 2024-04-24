@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const formData = new FormData(this);
             try {
-                const res = yield fetch('https://my-brand-backend-h88y.onrender.com/blog', {
+                const res = yield fetch('https://my-brand-backend-flax.vercel.app/blog', {
                     method: 'POST',
                     body: formData,
                     credentials: 'include'
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     const cookie = document.cookie.split('jwt=')[1];
-    fetch('https://my-brand-backend-h88y.onrender.com/api/user', {
+    fetch('https://my-brand-backend-flax.vercel.app/api/user', {
         credentials: 'include',
         headers: {
             "Authorization": `Bearer ${cookie}`

@@ -40,7 +40,7 @@ if (Form) {
             ErrorsEmail.innerHTML = '';
         }
         try {
-            const res = yield fetch('https://my-brand-backend-h88y.onrender.com/users', {
+            const res = yield fetch('https://my-brand-backend-flax.vercel.app/users', {
                 method: 'POST',
                 body: JSON.stringify({
                     username: inputUsername,

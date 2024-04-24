@@ -92,14 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const deleteArticle = async (id: any) => {
         try {
-            const response = await fetch(`https://my-brand-backend-h88y.onrender.com/blog/${id}`, {
+            const response = await fetch(`https://my-brand-backend-flax.vercel.app/blog/${id}`, {
                 method: 'DELETE',
                 credentials: 'include'
             });
 
             if (response.ok) {
                 console.log(`Article with ID ${id} deleted successfully`);
-                fetch('https://my-brand-backend-h88y.onrender.com/blog', { credentials: 'include' })
+                fetch('https://my-brand-backend-flax.vercel.app/blog', { credentials: 'include' })
                     .then(res => res.json())
                     .then(data => displayArticle(data))
                     .catch(err => console.log(err));
@@ -111,13 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    fetch('https://my-brand-backend-h88y.onrender.com/blog', { credentials: 'include' })
+    fetch('https://my-brand-backend-flax.vercel.app/blog', { credentials: 'include' })
         .then(res => res.json())
         .then(data => displayArticle(data))
         .catch(err => console.log(err));
 
         const cookie = document.cookie.split('jwt=')[1]
-        fetch('https://my-brand-backend-h88y.onrender.com/api/user', { 
+        fetch('https://my-brand-backend-flax.vercel.app/api/user', { 
             credentials: 'include',
             headers: {
                 "Authorization": `Bearer ${cookie}`

@@ -15,7 +15,7 @@
         const password = (document.getElementById('password') as HTMLInputElement).value;
 
         try {
-            const res = await fetch('https://my-brand-backend-h88y.onrender.com/login', {
+            const res = await fetch('https://my-brand-backend-flax.vercel.app/login', {
                 method: 'POST',
                 body: JSON.stringify({
                     email: useremail,

@@ -25,7 +25,7 @@ form.addEventListener('submit', async(e) => {
 
 
 try {
-    const res = await fetch('https://my-brand-backend-h88y.onrender.com/contact', {
+    const res = await fetch('https://my-brand-backend-flax.vercel.app/contact', {
         method: 'POST',
         body: JSON.stringify({
             name: name,
@@ -113,7 +113,7 @@ document.addEventListener('click', async (e) => {
 });
 
 const cookiee = document.cookie.split('jwt=')[1]
-fetch('https://my-brand-backend-h88y.onrender.com/api/user', { 
+fetch('https://my-brand-backend-flax.vercel.app/api/user', { 
     credentials: 'include',
     headers: {
         "Authorization": `Bearer ${cookiee}`

@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(id)
 
     // Fetch blog data by ID
-    fetch(`https://my-brand-backend-h88y.onrender.com/api/blog/${id}`)
+    fetch(`https://my-brand-backend-flax.vercel.app/api/blog/${id}`)
         .then(response => response.json())
         .then(blog => {
             titleInput.value = blog.title;
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(this)
 
         // Send PUT request to update blog
-        fetch(`https://my-brand-backend-h88y.onrender.com/blog/${id}`, {
+        fetch(`https://my-brand-backend-flax.vercel.app/blog/${id}`, {
             method: 'PUT',
             body: formData,
             credentials: 'include'
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     const cookie = document.cookie.split('jwt=')[1]
-    fetch('https://my-brand-backend-h88y.onrender.com/api/user', { 
+    fetch('https://my-brand-backend-flax.vercel.app/api/user', { 
         credentials: 'include',
         headers: {
             "Authorization": `Bearer ${cookie}`

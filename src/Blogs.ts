@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    fetch('https://my-brand-backend-h88y.onrender.com/blog', {credentials: 'include'})
+    fetch('https://my-brand-backend-flax.vercel.app/blog', {credentials: 'include'})
     .then(res => res.json())
     .then(datas => {
       datas.forEach((data: any) => {
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     const cookie = document.cookie.split('jwt=')[1]
-    fetch('https://my-brand-backend-h88y.onrender.com/api/user', { 
+    fetch('https://my-brand-backend-flax.vercel.app/api/user', { 
         credentials: 'include',
         headers: {
             "Authorization": `Bearer ${cookie}`

@@ -36,7 +36,7 @@ if (Form) {
         }
 
         try {
-                const res = await fetch('https://my-brand-backend-h88y.onrender.com/users',{
+                const res = await fetch('https://my-brand-backend-flax.vercel.app/users',{
                     method: 'POST',
                     body: JSON.stringify({ 
                         username: inputUsername,

@@ -37,7 +37,7 @@ function displayUserMessage(userMessage: any): void {
 }
 
 
-fetch('https://my-brand-backend-h88y.onrender.com/contact/message')
+fetch('https://my-brand-backend-flax.vercel.app/contact/message')
 .then(res => res.json())
 .then(data => displayUserMessage(data))
 .catch(error => console.log(error))
@@ -103,7 +103,7 @@ document.addEventListener('click', async (e) => {
 });
 
 const cookieee = document.cookie.split('jwt=')[1]
-fetch('https://my-brand-backend-h88y.onrender.com/api/user', { 
+fetch('https://my-brand-backend-flax.vercel.app/api/user', { 
     credentials: 'include',
     headers: {
         "Authorization": `Bearer ${cookieee}`
