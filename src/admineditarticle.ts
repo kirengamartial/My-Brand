@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error('Error fetching blog data:', error));
 
     // Handle form submission
+    const token = document.cookie.split('jwt=')[1]
     editForm.addEventListener('submit', function(e)  {
         e.preventDefault();
 
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch(`https://my-brand-backend-flax.vercel.app/blog/${id}`, {
             method: 'PUT',
             body: formData,
+            headers: {"Authorization": `Bearer ${token}`},
             credentials: 'include'
         })
         .then(response => response.json())

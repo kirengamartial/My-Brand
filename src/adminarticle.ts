@@ -89,11 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     };
-
+     const token = document.cookie.split('jwt=')[1]
     const deleteArticle = async (id: any) => {
         try {
             const response = await fetch(`https://my-brand-backend-flax.vercel.app/blog/${id}`, {
                 method: 'DELETE',
+                headers: {"Authorization": `Bearer ${token}`},
                 credentials: 'include'
             });
 

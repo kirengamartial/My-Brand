@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
       
-
+    const token = document.cookie.split('jwt=')[1]
     Form.addEventListener('submit', async function(e) {
         e.preventDefault();
         const formData = new FormData(this)
@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await fetch('https://my-brand-backend-flax.vercel.app/blog', {
                 method: 'POST',
                 body: formData,
+                headers: {"Authorization": `Bearer ${token}`},
                 credentials: 'include'
             })
             const data = await res.json()

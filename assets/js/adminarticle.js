@@ -93,10 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     };
+    const token = document.cookie.split('jwt=')[1];
     const deleteArticle = (id) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const response = yield fetch(`https://my-brand-backend-flax.vercel.app/blog/${id}`, {
                 method: 'DELETE',
+                headers: { "Authorization": `Bearer ${token}` },
                 credentials: 'include'
             });
             if (response.ok) {
