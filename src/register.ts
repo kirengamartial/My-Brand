@@ -35,6 +35,7 @@ if (Form) {
             ErrorsEmail.innerHTML = '';
         }
 
+        
         try {
                 const res = await fetch('https://my-brand-backend-flax.vercel.app/users',{
                     method: 'POST',
