@@ -59,10 +59,13 @@ const updateUserUIII = (user: any) => {
                 <a href="#" class="nav__link">
                     Admin <i class="fas fa-chevron-down"></i>
                 </a>
+                <div class="tesi">
                 <ul class="dropdown-content">
                     <li><a href="adminquery.html">Query</a></li>
                     <li><a href="adminarticle.html">Article</a></li>
                 </ul>
+                </div>
+                
             `;
         } else {
             Adminnn.innerHTML = '';
@@ -71,10 +74,13 @@ const updateUserUIII = (user: any) => {
             <a href="#" class="nav__link">
                 ${user.username}
             </a>
+            <div class="tesi">
             <ul class="dropdown-content">
-                <li><a href="editProfile.html?=${user._id}">profile</a></li>
-                <li ><a id="logout" href="#">Logout</a></li>
+            <li><a href="editProfile.html?=${user._id}">profile</a></li>
+            <li ><a id="logout" href="#">Logout</a></li>
             </ul>
+            </div>
+           
         `;
     } else {
         loginDivvv.innerHTML = `

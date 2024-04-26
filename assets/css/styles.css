@@ -1296,6 +1296,7 @@ th, td {
     width: 100%;
     text-align: center;
     transition: 0.3s;
+    height: 400px;
    }
    .nav__item {
     margin: 16px 0;
@@ -1314,6 +1315,23 @@ th, td {
   }
   .hamburger.active  .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
+  }
+  .tesi {
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+  }
+  .dropdown-content{
+    background-color: #191627;
+  }
+  .dropdown-content li {
+    padding: 5px 0;
+    padding-left: 12px;
+  }
+  .dropdown-content li a {
+    color: white;
+    font-size: 12px;
+    
   }
 }
 
